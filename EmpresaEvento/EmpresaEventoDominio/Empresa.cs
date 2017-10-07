@@ -23,5 +23,10 @@ namespace EmpresaEventoDominio
         {
             get { return servicios; }
         }
+
+        public List<Usuario> Usuarios
+        {
+            get { return usuarios; }
+        }
     }
 }
