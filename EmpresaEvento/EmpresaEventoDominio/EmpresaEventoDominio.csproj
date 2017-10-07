@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Admin.cs" />
     <Compile Include="Contrato.cs" />
+    <Compile Include="Empresa.cs" />
     <Compile Include="Evento.cs" />
     <Compile Include="Organizador.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
