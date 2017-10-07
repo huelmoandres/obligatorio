@@ -18,5 +18,10 @@ namespace EmpresaEventoDominio
         {
             get { return instancia;  }
         }
+
+        public List<Servicio> Servicios
+        {
+            get { return servicios; }
+        }
     }
 }
