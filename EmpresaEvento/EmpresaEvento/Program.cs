@@ -9,6 +9,7 @@ namespace EmpresaEvento
 {
     class Program
     {
+        public Empresa emp = Empresa.Instancia;
         static void Main(string[] args)
         {
         }
