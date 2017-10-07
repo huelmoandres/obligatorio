@@ -1,3 +1,4 @@
 C:\Users\Laravel\Documents\ORT\Programacion-2\ObligatorioP2\EmpresaEvento\EmpresaEvento\bin\Debug\EmpresaEvento.exe.config
 C:\Users\agu_2\Documents\ORT\Programacion2\Obligatorio\EmpresaEvento\EmpresaEvento\bin\Debug\EmpresaEvento.exe.config
 C:\Users\Laravel\Documents\ORT\Programacion-2\Obligatorio\p2\EmpresaEvento\EmpresaEvento\bin\Debug\EmpresaEvento.exe.config
+C:\Users\agu_2\Documents\ORT\Programacion2\Proyecto\EmpresaEvento\EmpresaEvento\bin\Debug\EmpresaEvento.exe.config
