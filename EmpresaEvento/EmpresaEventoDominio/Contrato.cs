@@ -10,7 +10,7 @@ namespace EmpresaEventoDominio
     {
         #region Atributos
         private Servicio servicio;
-        private int cantPersonass;
+        private int cantPersonas;
         #endregion
 
         #region Propiedades
@@ -27,16 +27,16 @@ namespace EmpresaEventoDominio
             }
         }
 
-        public int CantPersonass
+        public int CantPersonas
         {
             get
             {
-                return cantPersonass;
+                return cantPersonas;
             }
 
             set
             {
-                cantPersonass = value;
+                cantPersonas = value;
             }
         }
         #endregion
@@ -45,7 +45,7 @@ namespace EmpresaEventoDominio
         public Contrato(Servicio servicio, int cantPersonas)
         {
             this.Servicio = servicio;
-            this.CantPersonass = cantPersonass;
+            this.CantPersonas = cantPersonas;
         }
         #endregion
     }
