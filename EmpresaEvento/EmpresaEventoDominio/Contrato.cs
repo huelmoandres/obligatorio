@@ -10,7 +10,7 @@ namespace EmpresaEventoDominio
     {
         #region Atributos
         private Servicio servicio;
-        private int cantPersonas;
+        private int cantPersonass;
         #endregion
 
         #region Propiedades
