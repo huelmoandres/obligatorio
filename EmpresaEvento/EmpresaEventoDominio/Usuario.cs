@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace EmpresaEventoDominio
 {
@@ -88,6 +89,17 @@ namespace EmpresaEventoDominio
                     resultado = true;
                 }
                 i++;
+            }
+            return resultado;
+        }
+
+        public static bool ValidoEmail(String email)
+        {
+            bool resultado = false;
+            String formato = "\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*";
+            if (!Regex.IsMatch(email, formato))
+            {
+                resultado = true;
             }
             return resultado;
         }
