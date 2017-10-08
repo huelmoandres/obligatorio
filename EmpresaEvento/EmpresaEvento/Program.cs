@@ -17,7 +17,7 @@ namespace EmpresaEvento
                 int numero = Convert.ToInt32(Console.ReadLine());
             } catch(FormatException e)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine(e.Message);decimal
             }
             Console.ReadKey();
         }
