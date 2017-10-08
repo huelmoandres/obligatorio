@@ -9,7 +9,7 @@ namespace EmpresaEventoDominio
     public class Admin : Usuario
     {
         #region Constructor
-        public Admin(string email, string pass, char rol) : base(email, pass, rol)
+        public Admin(string email, string pass, byte rol) : base(email, pass, rol)
         {
         }
         #endregion

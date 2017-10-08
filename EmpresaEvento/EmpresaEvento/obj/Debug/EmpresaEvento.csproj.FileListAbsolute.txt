@@ -2,3 +2,11 @@ C:\Users\Laravel\Documents\ORT\Programacion-2\ObligatorioP2\EmpresaEvento\Empres
 C:\Users\agu_2\Documents\ORT\Programacion2\Obligatorio\EmpresaEvento\EmpresaEvento\bin\Debug\EmpresaEvento.exe.config
 C:\Users\Laravel\Documents\ORT\Programacion-2\Obligatorio\p2\EmpresaEvento\EmpresaEvento\bin\Debug\EmpresaEvento.exe.config
 C:\Users\agu_2\Documents\ORT\Programacion2\Proyecto\EmpresaEvento\EmpresaEvento\bin\Debug\EmpresaEvento.exe.config
+C:\Users\Laravel\Documents\ORT\Programacion-2\TrabajoP2\EmpresaEvento\EmpresaEvento\bin\Debug\EmpresaEvento.exe.config
+C:\Users\Laravel\Documents\ORT\Programacion-2\TrabajoP2\EmpresaEvento\EmpresaEvento\bin\Debug\EmpresaEvento.exe
+C:\Users\Laravel\Documents\ORT\Programacion-2\TrabajoP2\EmpresaEvento\EmpresaEvento\bin\Debug\EmpresaEvento.pdb
+C:\Users\Laravel\Documents\ORT\Programacion-2\TrabajoP2\EmpresaEvento\EmpresaEvento\bin\Debug\EmpresaEventoDominio.dll
+C:\Users\Laravel\Documents\ORT\Programacion-2\TrabajoP2\EmpresaEvento\EmpresaEvento\bin\Debug\EmpresaEventoDominio.pdb
+C:\Users\Laravel\Documents\ORT\Programacion-2\TrabajoP2\EmpresaEvento\EmpresaEvento\obj\Debug\EmpresaEvento.csprojResolveAssemblyReference.cache
+C:\Users\Laravel\Documents\ORT\Programacion-2\TrabajoP2\EmpresaEvento\EmpresaEvento\obj\Debug\EmpresaEvento.exe
+C:\Users\Laravel\Documents\ORT\Programacion-2\TrabajoP2\EmpresaEvento\EmpresaEvento\obj\Debug\EmpresaEvento.pdb

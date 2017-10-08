@@ -11,7 +11,7 @@ namespace EmpresaEventoDominio
         #region Atributos
         private string email;
         private string pass;
-        private char rol;
+        private byte rol;
         #endregion
 
         #region Propiedades
@@ -39,7 +39,7 @@ namespace EmpresaEventoDominio
                 pass = value;
             }
         }
-        public char Rol
+        public byte Rol
         {
             get
             {
@@ -54,12 +54,42 @@ namespace EmpresaEventoDominio
         #endregion
 
         #region Constructor
-        public Usuario(string email, string pass, char rol)
+        public Usuario(string email, string pass, byte rol)
         {
             this.Email = email;
             this.Pass = pass;
             this.rol = rol;
         }
         #endregion
+
+        public static bool ValidoPass(string pass)
+        {
+            bool resultado = false;
+            if(pass.Length < 8)
+            {
+                resultado = true;
+                
+            }
+            else if(!pass.Contains(".") && !pass.Contains(",") && !pass.Contains("?")
+                && !pass.Contains(";"))
+            {
+                resultado = true;
+            }
+
+            int i = 0;
+            bool bandera = false;
+            while(i < pass.Length && !bandera)
+            {
+                if (char.IsUpper(pass[i]))
+                {
+                    bandera = true;
+                } else
+                {
+                    resultado = true;
+                }
+                i++;
+            }
+            return resultado;
+        }
     }
 }

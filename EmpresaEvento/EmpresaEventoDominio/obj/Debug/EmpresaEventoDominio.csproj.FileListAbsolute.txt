@@ -1,0 +1,5 @@
+C:\Users\Laravel\Documents\ORT\Programacion-2\TrabajoP2\EmpresaEvento\EmpresaEventoDominio\obj\Debug\EmpresaEventoDominio.csprojResolveAssemblyReference.cache
+C:\Users\Laravel\Documents\ORT\Programacion-2\TrabajoP2\EmpresaEvento\EmpresaEventoDominio\bin\Debug\EmpresaEventoDominio.dll
+C:\Users\Laravel\Documents\ORT\Programacion-2\TrabajoP2\EmpresaEvento\EmpresaEventoDominio\bin\Debug\EmpresaEventoDominio.pdb
+C:\Users\Laravel\Documents\ORT\Programacion-2\TrabajoP2\EmpresaEvento\EmpresaEventoDominio\obj\Debug\EmpresaEventoDominio.dll
+C:\Users\Laravel\Documents\ORT\Programacion-2\TrabajoP2\EmpresaEvento\EmpresaEventoDominio\obj\Debug\EmpresaEventoDominio.pdb

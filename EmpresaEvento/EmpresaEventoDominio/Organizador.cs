@@ -54,7 +54,7 @@ namespace EmpresaEventoDominio
         #endregion
 
         #region Constructor
-        public Organizador(string email, string pass, string nombre, string telefono, string direccion) : base(email, pass)
+        public Organizador(string email, string pass, byte rol, string nombre, string telefono, string direccion) : base(email, pass, rol)
         {
             this.Nombre = nombre;
             this.Direccion = direccion;

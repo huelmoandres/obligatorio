@@ -12,10 +12,11 @@ namespace EmpresaEventoDominio
         private static Empresa instancia = new Empresa();
         private List<Usuario> usuarios = new List<Usuario>();
         private List<Servicio> servicios = new List<Servicio>();
+        private List<Evento> eventos = new List<Evento>();
         #endregion
 
         #region Propiedades
-        public Empresa Instancia
+        public static Empresa Instancia
         {
             get { return instancia;  }
         }

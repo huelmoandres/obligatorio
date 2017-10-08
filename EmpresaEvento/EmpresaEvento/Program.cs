@@ -12,6 +12,15 @@ namespace EmpresaEvento
         public Empresa emp = Empresa.Instancia;
         static void Main(string[] args)
         {
+            bool resultado = Usuario.ValidoPass("Ass?11sadw");
+            if(resultado)
+            {
+                Console.WriteLine("No válida");
+            } else
+            {
+                Console.WriteLine("Válida");
+            }
+            Console.ReadKey();
         }
     }
 }
