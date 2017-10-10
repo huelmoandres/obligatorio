@@ -10,3 +10,5 @@ C:\Users\Laravel\Documents\ORT\Programacion-2\TrabajoP2\EmpresaEvento\EmpresaEve
 C:\Users\Laravel\Documents\ORT\Programacion-2\TrabajoP2\EmpresaEvento\EmpresaEvento\obj\Debug\EmpresaEvento.csprojResolveAssemblyReference.cache
 C:\Users\Laravel\Documents\ORT\Programacion-2\TrabajoP2\EmpresaEvento\EmpresaEvento\obj\Debug\EmpresaEvento.exe
 C:\Users\Laravel\Documents\ORT\Programacion-2\TrabajoP2\EmpresaEvento\EmpresaEvento\obj\Debug\EmpresaEvento.pdb
+C:\Users\agu_2\Documents\ORT\Programacion2\Proyecto\EmpresaEvento\EmpresaEvento\obj\Debug\EmpresaEvento.exe
+C:\Users\agu_2\Documents\ORT\Programacion2\Proyecto\EmpresaEvento\EmpresaEvento\obj\Debug\EmpresaEvento.pdb

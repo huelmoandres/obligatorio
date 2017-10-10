@@ -36,6 +36,16 @@ namespace EmpresaEventoDominio
         private Empresa() { }
         #endregion
 
-
+        public bool BuscarUsuario(string mailUsuario)
+        {
+            bool encontre = false;
+            int i = 0;
+            while (i < usuarios.Count && !encontre)
+            {
+                if (usuarios[i].Email == mailUsuario) encontre = true;
+                i++;
+            }
+            return encontre;
+        }
     }
 }
