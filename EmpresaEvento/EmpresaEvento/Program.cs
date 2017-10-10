@@ -22,34 +22,17 @@ namespace EmpresaEvento
             //}
             //Console.ReadKey();
 
-            string mail = "";
-            string clave = "";
+            string opcion = "";
 
-            while (mail != "0")
+            while (opcion != "0")
             {
                 Console.Clear();
-                Console.WriteLine("Ingrese usuario");
-                Console.WriteLine("0 para salir");
-                mail = Console.ReadLine().Trim();
-                while(mail != "0")
+                Console.WriteLine("1 - Ingrese usuario");
+                Console.WriteLine("0 - para salir");
+                opcion = Console.ReadLine().Trim();
+                if(opcion != "1")
                 {
-                    if(mail != "0")
-                    {
-                        if (Usuario.ValidoEmail(mail))
-                        {
-                            
-                            Console.WriteLine("Ingrese contraseña");
-                            clave = Console.ReadLine().Trim();
-                            if(Usuario.ValidoPass(mail))
-                            {
-                                //Funcion con un despliegue de menu en donde puedas trabajar
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("Vuelva a ingresar usuario o elige opcón 0 para salir");
-                        }
-                    }
+                    
                 }
             }
 
