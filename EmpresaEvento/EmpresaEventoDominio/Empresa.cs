@@ -35,5 +35,7 @@ namespace EmpresaEventoDominio
         #region Constructor
         private Empresa() { }
         #endregion
+
+
     }
 }

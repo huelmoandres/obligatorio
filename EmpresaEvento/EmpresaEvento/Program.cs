@@ -37,6 +37,7 @@ namespace EmpresaEvento
                     {
                         if (Usuario.ValidoEmail(mail))
                         {
+                            
                             Console.WriteLine("Ingrese contraseña");
                             clave = Console.ReadLine().Trim();
                             if(Usuario.ValidoPass(mail))
