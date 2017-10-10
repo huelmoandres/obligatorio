@@ -12,7 +12,6 @@ namespace EmpresaEventoDominio
         #region Atributos
         private string email;
         private string pass;
-        private byte rol;
         #endregion
 
         #region Propiedades
@@ -40,55 +39,33 @@ namespace EmpresaEventoDominio
                 pass = value;
             }
         }
-        public byte Rol
-        {
-            get
-            {
-                return rol;
-            }
-
-            set
-            {
-                rol = value;
-            }
-        }
         #endregion
 
         #region Constructor
-        public Usuario(string email, string pass, byte rol)
+        public Usuario(string email, string pass)
         {
             this.Email = email;
             this.Pass = pass;
-            this.rol = rol;
         }
         #endregion
 
         public static bool ValidoPass(string pass)
         {
             bool resultado = false;
-            if(pass.Length < 8)
+            if (pass.Contains(".") && pass.Contains(",") && pass.Contains("?")
+                && pass.Contains(";") && pass.Length > 8)
             {
-                resultado = true;
-                
-            }
-            else if(!pass.Contains(".") && !pass.Contains(",") && !pass.Contains("?")
-                && !pass.Contains(";"))
-            {
-                resultado = true;
-            }
-
-            int i = 0;
-            bool bandera = false;
-            while(i < pass.Length && !bandera)
-            {
-                if (char.IsUpper(pass[i]))
+                int i = 0;
+                bool encontro = false;
+                while (i < pass.Length && !encontro)
                 {
-                    bandera = true;
-                } else
-                {
-                    resultado = true;
+                    if (char.IsUpper(pass[i]))
+                    {
+                        encontro = true;
+                        resultado = true;
+                    }
+                    i++;
                 }
-                i++;
             }
             return resultado;
         }
@@ -96,12 +73,19 @@ namespace EmpresaEventoDominio
         public static bool ValidoEmail(String email)
         {
             bool resultado = false;
-            String formato = "\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*";
-            if (!Regex.IsMatch(email, formato))
+            string formato = "\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*";
+            if (Regex.IsMatch(email, formato))
             {
                 resultado = true;
             }
             return resultado;
+        }
+
+        public enum ErroresAlta
+        {
+            Ok,
+            ErrorEmail,
+            ErrorPass
         }
     }
 }

@@ -9,18 +9,11 @@ namespace EmpresaEvento
 {
     class Program
     {
-        public Empresa emp = Empresa.Instancia;
+        public static Empresa emp = Empresa.Instancia;
 
         static void Main(string[] args)
         {
-            //try
-            //{
-            //    int numero = Convert.ToInt32(Console.ReadLine());
-            //} catch(FormatException e)
-            //{
-            //    Console.WriteLine(e.Message);
-            //}
-            //Console.ReadKey();
+            Ingresar();
 
             string opcion = "";
 
@@ -36,6 +29,58 @@ namespace EmpresaEvento
                 }
             }
 
+      
+        }
+
+        public static void Ingresar()
+        {
+            bool autenticado = false;
+            string email = "";
+            string pass = "";
+            string opcion = "";
+
+            while (!autenticado) {
+                Console.Write("Ingrese un email: ");
+                email = Console.ReadLine();
+                Console.Write("Ingrese una pass: ");
+                pass = Console.ReadLine();
+
+                if(Usuario.ValidoEmail(email))
+                {
+                    Usuario tengoUsuario = emp.BuscarUsuario(email);
+                    if (tengoUsuario != null)
+                    {
+                        if (tengoUsuario.Pass == pass)
+                        {
+                            autenticado = true;
+                        }
+                        else
+                        {
+                            Console.WriteLine("¡Contraseña incorrecta!");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Usuario no existente");
+                        Console.WriteLine("1. Registrarse como administrador");
+                        Console.WriteLine("2. Registrarse como organizador");
+                        Console.WriteLine("0. Salir");
+                        opcion = Console.ReadLine().Trim();
+                        switch (opcion)
+                        {
+                            case "1":
+                                Console.WriteLine(emp.AltaAdministrador(email, pass));
+                                break;
+                        }
+                    }
+                } else
+                {
+                        Console.Clear();
+                        Console.WriteLine("¡Email no válido!\n");
+                        Console.WriteLine("¿Desea salir? - s/n\n");
+                        opcion = Console.ReadLine();
+                }
+            }
         }
     }
 }

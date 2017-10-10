@@ -36,16 +36,34 @@ namespace EmpresaEventoDominio
         private Empresa() { }
         #endregion
 
-        public bool BuscarUsuario(string mailUsuario)
+        public Usuario BuscarUsuario(string mailUsuario)
         {
-            bool encontre = false;
+            Usuario usu = null;
             int i = 0;
-            while (i < usuarios.Count && !encontre)
+            while (i < usuarios.Count && usu == null)
             {
-                if (usuarios[i].Email == mailUsuario) encontre = true;
+                if (usuarios[i].Email == mailUsuario) usu = usuarios[i];
                 i++;
             }
-            return encontre;
+            return usu;
+        }
+
+        public Admin.ErroresAlta AltaAdministrador(string email, string pass)
+        {
+            Admin.ErroresAlta resultado = Admin.ErroresAlta.Ok;
+            if (!Admin.ValidoEmail(email))
+            {
+                resultado = Admin.ErroresAlta.ErrorEmail;
+            } else if(!Admin.ValidoPass(pass))
+            {
+                resultado = Admin.ErroresAlta.ErrorPass;
+            } else
+            {
+                Admin a = new Admin(email, pass);
+                usuarios.Add(a);
+            }
+
+            return resultado;
         }
     }
 }
