@@ -13,23 +13,23 @@ namespace EmpresaEvento
 
         static void Main(string[] args)
         {
-            Ingresar();
-
+            Console.WriteLine("¡Bienvenido!");
             string opcion = "";
-
             while (opcion != "0")
             {
-                Console.Clear();
                 Console.WriteLine("1 - Ingrese usuario");
-                Console.WriteLine("0 - para salir");
+                Console.WriteLine("0 - Salir");
                 opcion = Console.ReadLine().Trim();
-                if(opcion != "1")
+                if (opcion == "1")
                 {
-                    
+                    Ingresar();
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("La opción ingresada no es correcta.\n");
                 }
             }
-
-      
         }
 
         public static void Ingresar()
@@ -39,7 +39,8 @@ namespace EmpresaEvento
             string pass = "";
             string opcion = "";
 
-            while (!autenticado) {
+            while (!autenticado && opcion != "0") {
+                Console.Clear();
                 Console.Write("Ingrese un email: ");
                 email = Console.ReadLine();
                 Console.Write("Ingrese una pass: ");
@@ -73,12 +74,12 @@ namespace EmpresaEvento
                                 break;
                         }
                     }
-                } else
+                }
                 {
-                        Console.Clear();
-                        Console.WriteLine("¡Email no válido!\n");
-                        Console.WriteLine("¿Desea salir? - s/n\n");
-                        opcion = Console.ReadLine();
+                    Console.Clear();
+                    Console.WriteLine("¡Email no válido!\n");
+                    Console.Write("¿Desea salir?\n0 - Salir\nCualquier tecla para continuar: ");
+                    opcion = Console.ReadLine();
                 }
             }
         }
