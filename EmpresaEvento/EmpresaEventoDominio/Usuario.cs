@@ -52,8 +52,8 @@ namespace EmpresaEventoDominio
         public static bool ValidoPass(string pass)
         {
             bool resultado = false;
-            if (pass.Contains(".") && pass.Contains(",") && pass.Contains("?")
-                && pass.Contains(";") && pass.Length > 8)
+            if (pass.Contains(".") && pass.Contains(",") && pass.Contains("!")
+                && pass.Contains(";") && pass.Length >= 8)
             {
                 int i = 0;
                 bool encontro = false;

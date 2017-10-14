@@ -19,6 +19,7 @@ namespace EmpresaEvento
             {
                 Console.WriteLine("1 - Ingrese usuario");
                 Console.WriteLine("0 - Salir");
+                Console.Write("Seleccione una opción: ");
                 opcion = Console.ReadLine().Trim();
                 if (opcion == "1")
                 {
@@ -84,7 +85,7 @@ namespace EmpresaEvento
 
         public static void UsuarioLogeado()
         {
-            Console.WriteLine("¡Bienvenido!");
+            Console.WriteLine("¡Logeado!");
             string opcion = "";
             while (opcion != "0")
             {

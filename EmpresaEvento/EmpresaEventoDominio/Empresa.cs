@@ -13,6 +13,11 @@ namespace EmpresaEventoDominio
         private List<Usuario> usuarios = new List<Usuario>();
         private List<Servicio> servicios = new List<Servicio>();
         private List<Evento> eventos = new List<Evento>();
+
+        #region Usuarios pre-cargados
+        private Usuario adminUno = new Admin("admin@eventos17.com", "Admin!99");
+        #endregion
+
         #endregion
 
         #region Propiedades
@@ -34,8 +39,7 @@ namespace EmpresaEventoDominio
 
         #region Constructor
         private Empresa() {
-            Usuario u = new Admin("asd@gmail.com", "And?1222");
-            usuarios.Add(u);
+            usuarios.Add(adminUno);
         }
         #endregion
 
