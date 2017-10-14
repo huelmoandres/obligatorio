@@ -33,7 +33,10 @@ namespace EmpresaEventoDominio
         #endregion
 
         #region Constructor
-        private Empresa() { }
+        private Empresa() {
+            Usuario u = new Admin("asd@gmail.com", "And?1222");
+            usuarios.Add(u);
+        }
         #endregion
 
         public Usuario BuscarUsuario(string mailUsuario)

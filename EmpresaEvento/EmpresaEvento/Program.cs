@@ -34,18 +34,14 @@ namespace EmpresaEvento
 
         public static void Ingresar()
         {
-            bool autenticado = false;
             string email = "";
             string pass = "";
             string opcion = "";
-
-            while (!autenticado && opcion != "0") {
-                Console.Clear();
-                Console.Write("Ingrese un email: ");
+            while (opcion != "0") {
+                Console.Write("\nIngrese un email: ");
                 email = Console.ReadLine();
                 Console.Write("Ingrese una pass: ");
                 pass = Console.ReadLine();
-
                 if(Usuario.ValidoEmail(email))
                 {
                     Usuario tengoUsuario = emp.BuscarUsuario(email);
@@ -53,11 +49,13 @@ namespace EmpresaEvento
                     {
                         if (tengoUsuario.Pass == pass)
                         {
-                            autenticado = true;
+                            UsuarioLogeado();
                         }
                         else
                         {
-                            Console.WriteLine("¡Contraseña incorrecta!");
+                            Console.Clear();
+                            Console.WriteLine("¡Contraseña incorrecta!\n");
+                            opcion = Salir();
                         }
                     }
                     else
@@ -75,13 +73,41 @@ namespace EmpresaEvento
                         }
                     }
                 }
+                else
                 {
                     Console.Clear();
                     Console.WriteLine("¡Email no válido!\n");
-                    Console.Write("¿Desea salir?\n0 - Salir\nCualquier tecla para continuar: ");
-                    opcion = Console.ReadLine();
+                    opcion = Salir();
                 }
             }
+        }
+
+        public static void UsuarioLogeado()
+        {
+            Console.WriteLine("¡Bienvenido!");
+            string opcion = "";
+            while (opcion != "0")
+            {
+                Console.WriteLine("1 - Ingrese usuario");
+                Console.WriteLine("0 - Salir");
+                opcion = Console.ReadLine().Trim();
+                if (opcion == "1")
+                {
+                    Ingresar();
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("La opción ingresada no es correcta.\n");
+                }
+            }
+        }
+
+        public static String Salir()
+        {
+            Console.Write("¿Desea salir?\n0 - Salir\nCualquier tecla para continuar: ");
+            String opcion = Console.ReadLine();
+            return opcion;
         }
     }
 }
