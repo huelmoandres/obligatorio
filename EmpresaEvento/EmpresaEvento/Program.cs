@@ -13,7 +13,13 @@ namespace EmpresaEvento
 
         static void Main(string[] args)
         {
-            Console.WriteLine("¡Bienvenido!");
+            MenuPrincipal();
+        }
+
+        public static void MenuPrincipal()
+        {
+            Console.Clear();
+            Console.WriteLine("----- Login -----");
             string opcion = "";
             while (opcion != "0")
             {
@@ -78,6 +84,9 @@ namespace EmpresaEvento
                                 case "2":
                                     AltaOrganizador(email);
                                     break;
+                                case "0":
+                                    MenuPrincipal();
+                                    break;
                                 default:
                                     Console.Clear();
                                     Console.WriteLine("La opción ingresada no es correcta.\n");
@@ -93,6 +102,7 @@ namespace EmpresaEvento
                     opcion = Salir();
                 }
             }
+            MenuPrincipal();
         }
 
         public static void UsuarioLogeado(Usuario logueado)
@@ -121,6 +131,9 @@ namespace EmpresaEvento
                             Console.Clear();
                             Console.WriteLine("Acceso denegado. Debe ser organizador.");
                         }
+                        break;
+                    case "0":
+                        MenuPrincipal();
                         break;
                     default:
                         Console.Clear();
@@ -154,6 +167,7 @@ namespace EmpresaEvento
                     opcion = Salir();
                 }
             }
+            MenuPrincipal();
         }
 
         public static void AltaOrganizador(string nuevoEmail)
@@ -181,6 +195,10 @@ namespace EmpresaEvento
                     opcion = "0";
                     UsuarioLogeado(emp.BuscarUsuario(nuevoEmail));
                 }
+                else if(opcion == "0")
+                {
+                    MenuPrincipal();
+                }
                 else
                 {
                     Console.Clear();
@@ -188,6 +206,7 @@ namespace EmpresaEvento
                     opcion = Salir();
                 }
             }
+            MenuPrincipal();
         }
 
         public static String Salir()
