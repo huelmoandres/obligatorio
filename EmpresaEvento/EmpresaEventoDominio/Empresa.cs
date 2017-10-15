@@ -62,6 +62,8 @@ namespace EmpresaEventoDominio
             }
             return usu;
         }
+
+        PENEEEE
         public Evento BuscarEvento(DateTime fecha)
         {
             Evento eve = null;
