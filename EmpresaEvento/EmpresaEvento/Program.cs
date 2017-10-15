@@ -8,14 +8,15 @@ using EmpresaEventoDominio;
 namespace EmpresaEvento
 {
     class Program
-    {
+    { 
+        
         public static Empresa emp = Empresa.Instancia;
 
         static void Main(string[] args)
         {
-            MenuPrincipal();
+            MenuPrincipal();]
         }
-
+        
         public static void MenuPrincipal()
         {
             Console.Clear();

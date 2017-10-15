@@ -15,6 +15,7 @@ namespace EmpresaEventoDominio
         private byte turno;
         private string descripcion;
         private string cliente;
+        private int cantAsistentes;
         private List<Contrato> contratos;
         #endregion
 
@@ -86,17 +87,44 @@ namespace EmpresaEventoDominio
                 return contratos;
             }
         }
+
+        public int CantAsistentes
+        {
+            get
+            {
+                return cantAsistentes;
+            }
+
+            set
+            {
+                cantAsistentes = value;
+            }
+        }
         #endregion
 
         #region Constructor
-        public Evento(DateTime fecha, byte turno, string descripcion, string cliente)
+        public Evento(DateTime fecha, byte turno, string descripcion, string cliente, int cantAsistentes)
         {
             this.Fecha = fecha;
             this.Turno = turno;
             this.Descripcion = descripcion;
             this.Cliente = cliente;
+            this.cantAsistentes = cantAsistentes;
             this.id = contador + 1;
             contador++;
+        }
+        #endregion
+
+        #region Validaciones
+        public static bool CamposVacios(DateTime fecha, byte turno, string des, string cli, int cantAsistentes)
+        {
+            bool resultado = false;
+            if(fecha != null && (turno >= 0 && turno <= 2) && des != "" && cli != "" && cantAsistentes )
+        }
+        public enum ErroresAlta{
+            Ok,
+            ControlAsistentes,
+            CamposVacios
         }
         #endregion
     }

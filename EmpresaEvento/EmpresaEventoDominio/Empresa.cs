@@ -62,7 +62,17 @@ namespace EmpresaEventoDominio
             }
             return usu;
         }
-
+        public Evento BuscarEvento(DateTime fecha)
+        {
+            Evento eve = null;
+            int i = 0;
+            while (i < eventos.Count && eve == null)
+            {
+                if (eventos[i].Fecha == fecha) eve = eventos[i];
+                i++;
+            }
+            return eve;
+        }
         #endregion
 
         #region Altas
