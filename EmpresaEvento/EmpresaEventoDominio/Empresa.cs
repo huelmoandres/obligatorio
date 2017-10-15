@@ -62,7 +62,7 @@ namespace EmpresaEventoDominio
             }
             return usu;
         }
-
+        Hoalaaa
         PENEEEE
         public Evento BuscarEvento(DateTime fecha)
         {
