@@ -17,7 +17,6 @@ namespace EmpresaEventoDominio
         #region Usuarios pre-cargados
         private Usuario adminUno = new Admin("admin@eventos17.com", "Admin!99");
         #endregion
-
         #endregion
 
         #region Propiedades
@@ -68,6 +67,29 @@ namespace EmpresaEventoDominio
             {
                 Admin a = new Admin(email, pass);
                 usuarios.Add(a);
+            }
+
+            return resultado;
+        }
+
+        public Organizador.ErroresAlta AltaOrganizador(string email, string pass, string nombre, string tel, string dir)
+        {
+            Organizador.ErroresAlta resultado = Admin.ErroresAlta.Ok;
+            if (!Organizador.ValidoEmail(email))
+            {
+                resultado = Organizador.ErroresAlta.ErrorEmail;
+            }
+            else if (!Organizador.ValidoPass(pass))
+            {
+                resultado = Organizador.ErroresAlta.ErrorPass;
+            } else if(!Organizador.ValidoNombre(nombre))
+            {
+                resultado = Organizador.ErroresAlta.ErrorNombre;
+            }
+            else
+            {
+                Organizador o = new Organizador(email, pass, nombre, tel, dir);
+                usuarios.Add(o);
             }
 
             return resultado;

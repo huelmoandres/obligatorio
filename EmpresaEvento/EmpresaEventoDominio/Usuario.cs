@@ -49,11 +49,12 @@ namespace EmpresaEventoDominio
         }
         #endregion
 
+        #region Validaciones
         public static bool ValidoPass(string pass)
         {
             bool resultado = false;
-            if (pass.Contains(".") && pass.Contains(",") && pass.Contains("!")
-                && pass.Contains(";") && pass.Length >= 8)
+            if ((pass.Contains(".") || pass.Contains(",") || pass.Contains("!")
+                || pass.Contains(";")) && pass.Length >= 8)
             {
                 int i = 0;
                 bool encontro = false;
@@ -81,11 +82,22 @@ namespace EmpresaEventoDominio
             return resultado;
         }
 
+        public static bool ValidoNombre(string nombre)
+        {
+            bool resultado = false;
+            if(nombre.Length >= 3)
+            {
+                resultado = true;
+            }
+            return resultado;
+        }
         public enum ErroresAlta
         {
             Ok,
             ErrorEmail,
-            ErrorPass
+            ErrorPass,
+            ErrorNombre
         }
+        #endregion
     }
 }

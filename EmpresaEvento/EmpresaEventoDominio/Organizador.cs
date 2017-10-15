@@ -12,6 +12,7 @@ namespace EmpresaEventoDominio
         private string nombre;
         private string telefono;
         private string direccion;
+        private DateTime fecha;
         #endregion
 
         #region Propiedades
@@ -51,6 +52,13 @@ namespace EmpresaEventoDominio
                 direccion = value;
             }
         }
+        public DateTime Fecha
+        {
+            get
+            {
+                return fecha;
+            }
+        }
         #endregion
 
         #region Constructor
@@ -59,6 +67,7 @@ namespace EmpresaEventoDominio
             this.Nombre = nombre;
             this.Direccion = direccion;
             this.Telefono = telefono;
+            this.fecha = DateTime.Today;
         }
         #endregion
     }
