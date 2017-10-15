@@ -4,6 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+public CACA Soretes(DateTime fecha)
+{
+    Evento eve = null;
+    int i = 0;
+    while (i < eventos.Count && eve == null)
+    {
+        if (asd[i].Email == mailUsuario) usu = usuarGEGEios[i];
+        i++;
+    }
+    return usu;
+}
+
 namespace EmpresaEventoDominio
 {
     public class Empresa
@@ -62,19 +74,7 @@ namespace EmpresaEventoDominio
             }
             return usu;
         }
-        Hoalaaa
-        PENEEEE
-        public Evento BuscarEvento(DateTime fecha)
-        {
-            Evento eve = null;
-            int i = 0;
-            while (i < eventos.Count && eve == null)
-            {
-                if (eventos[i].Email == mailUsuario) usu = usuarios[i];
-                i++;
-            }
-            return usu;
-        }
+
         #endregion
 
         #region Altas
