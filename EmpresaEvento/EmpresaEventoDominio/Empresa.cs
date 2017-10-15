@@ -4,18 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public CACA Soretes(DateTime fecha)
-{
-    Evento eve = null;
-    int i = 0;
-    while (i < eventos.Count && eve == null)
-    {
-        if (asd[i].Email == mailUsuario) usu = usuarGEGEios[i];
-        i++;
-    }
-    return usu;
-}
-
 namespace EmpresaEventoDominio
 {
     public class Empresa
