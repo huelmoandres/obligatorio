@@ -15,7 +15,12 @@ namespace EmpresaEventoDominio
         private List<Evento> eventos = new List<Evento>();
 
         #region Usuarios pre-cargados
-        private Usuario adminUno = new Admin("admin@eventos17.com", "Admin!99");
+        private Usuario a1 = new Admin("admin@eventos17.com", "Admin!99");
+        #endregion
+        #region Servicios pre-cargados
+        private Servicio s1 = new Servicio("Cocina", "El servicio incluye plato principal y postre", 480);
+        private Servicio s2 = new Servicio("Fotografía", "El servicio incluye cinco fotos por persona", 120);
+        private Servicio s3 = new Servicio("Localidad", "El servicio incluye una localidad por persona", 50);
         #endregion
         #endregion
 
@@ -38,10 +43,14 @@ namespace EmpresaEventoDominio
 
         #region Constructor
         private Empresa() {
-            usuarios.Add(adminUno);
+            usuarios.Add(a1);
+            servicios.Add(s1);
+            servicios.Add(s2);
+            servicios.Add(s3);
         }
         #endregion
 
+        #region Buscadores
         public Usuario BuscarUsuario(string mailUsuario)
         {
             Usuario usu = null;
@@ -53,7 +62,20 @@ namespace EmpresaEventoDominio
             }
             return usu;
         }
+        public Evento BuscarEvento(DateTime fecha)
+        {
+            Evento eve = null;
+            int i = 0;
+            while (i < eventos.Count && eve == null)
+            {
+                if (eventos[i].Email == mailUsuario) usu = usuarios[i];
+                i++;
+            }
+            return usu;
+        }
+        #endregion
 
+        #region Altas
         public Admin.ErroresAlta AltaAdministrador(string email, string pass)
         {
             Admin.ErroresAlta resultado = Admin.ErroresAlta.Ok;
@@ -71,7 +93,6 @@ namespace EmpresaEventoDominio
 
             return resultado;
         }
-
         public Organizador.ErroresAlta AltaOrganizador(string email, string pass, string nombre, string tel, string dir)
         {
             Organizador.ErroresAlta resultado = Admin.ErroresAlta.Ok;
@@ -82,9 +103,18 @@ namespace EmpresaEventoDominio
             else if (!Organizador.ValidoPass(pass))
             {
                 resultado = Organizador.ErroresAlta.ErrorPass;
-            } else if(!Organizador.ValidoNombre(nombre))
+            }
+            else if(!Organizador.ValidoNombre(nombre))
             {
                 resultado = Organizador.ErroresAlta.ErrorNombre;
+            }
+            else if (!Organizador.ValidoTel(tel))
+            {
+                resultado = Organizador.ErroresAlta.ErrorTel;
+            }
+            else if (!Organizador.ValidoDir(dir))
+            {
+                resultado = Organizador.ErroresAlta.ErrorDir;
             }
             else
             {
@@ -94,5 +124,6 @@ namespace EmpresaEventoDominio
 
             return resultado;
         }
+        #endregion
     }
 }

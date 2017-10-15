@@ -125,10 +125,13 @@ namespace EmpresaEvento
                         ListarUsuarios();
                         break;
                     case "2":
+                        ListarServicios();
+                        break;
+                    case "3":
                         if(logueado is Organizador)
                         {
-                            Console.Clear();
-                            Console.WriteLine("Con acceso.\n");
+                            Organizador org = logueado as Organizador;
+                            RegistroEvento(org);
                         } else
                         {
                             Console.Clear();
@@ -147,6 +150,16 @@ namespace EmpresaEvento
 
         }
 
+        private static void RegistroEvento(Organizador org)
+        {
+            Console.Clear();
+            Console.WriteLine("Nombre: " + org.Nombre +
+                              "Teléfono: " + org.Telefono +
+                              "Dirección: " + org.Direccion +
+                              "Fecha de registro: " + org.Fecha);
+
+        }
+
         private static void ListarUsuarios()
         {
             Console.Clear();
@@ -154,6 +167,17 @@ namespace EmpresaEvento
             foreach(Usuario u in emp.Usuarios)
             {
                 Console.WriteLine(u.ToString());
+            }
+            Console.WriteLine("-------------------------------");
+        }
+
+        private static void ListarServicios()
+        {
+            Console.Clear();
+            Console.WriteLine("----- Listado de Servicios -----");
+            foreach (Servicio s in emp.Servicios)
+            {
+                Console.WriteLine(s.ToString());
             }
             Console.WriteLine("-------------------------------");
         }

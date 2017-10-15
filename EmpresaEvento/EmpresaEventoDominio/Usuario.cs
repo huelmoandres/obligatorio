@@ -85,7 +85,26 @@ namespace EmpresaEventoDominio
         public static bool ValidoNombre(string nombre)
         {
             bool resultado = false;
-            if(nombre.Length >= 3)
+            string formato = "^[a-zA-Z ]*$";
+            if(nombre.Length >= 3 && Regex.IsMatch(nombre, formato))
+            {
+                resultado = true;
+            }
+            return resultado;
+        }
+        public static bool ValidoTel(string tel)
+        {
+            bool resultado = false;
+            if (tel != "")
+            {
+                resultado = true;
+            }
+            return resultado;
+        }
+        public static bool ValidoDir(string dir)
+        {
+            bool resultado = false;
+            if (dir != "")
             {
                 resultado = true;
             }
@@ -96,7 +115,9 @@ namespace EmpresaEventoDominio
             Ok,
             ErrorEmail,
             ErrorPass,
-            ErrorNombre
+            ErrorNombre,
+            ErrorTel,
+            ErrorDir
         }
         #endregion
     }
