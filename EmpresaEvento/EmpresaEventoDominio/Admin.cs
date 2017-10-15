@@ -13,5 +13,11 @@ namespace EmpresaEventoDominio
         {
         }
         #endregion
+        public override string ToString()
+        {
+            return "Email: " + this.Email +
+                "\nContraseña: " + this.Pass +
+                "\nRol: Admin\n";
+        }
     }
 }

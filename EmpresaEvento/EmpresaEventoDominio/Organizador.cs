@@ -70,5 +70,15 @@ namespace EmpresaEventoDominio
             this.fecha = DateTime.Today;
         }
         #endregion
+
+        public override string ToString()
+        {
+            return "Email: " + this.Email +
+                "\nContraseña: " + this.Pass +
+                "\nNombre: " + this.Nombre +
+                "\nTeléfono: " + this.Telefono +
+                "\nDirección: " + this.Direccion +
+                "\nRol: Organizador\n";
+        }
     }
 }

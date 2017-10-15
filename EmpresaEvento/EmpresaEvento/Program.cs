@@ -122,6 +122,9 @@ namespace EmpresaEvento
                 switch (opcion)
                 {
                     case "1":
+                        ListarUsuarios();
+                        break;
+                    case "2":
                         if(logueado is Organizador)
                         {
                             Console.Clear();
@@ -144,6 +147,17 @@ namespace EmpresaEvento
 
         }
 
+        private static void ListarUsuarios()
+        {
+            Console.Clear();
+            Console.WriteLine("----- Listado de Usuarios -----");
+            foreach(Usuario u in emp.Usuarios)
+            {
+                Console.WriteLine(u.ToString());
+            }
+            Console.WriteLine("-------------------------------");
+        }
+
         public static void AltaAdmin(string nuevoEmail)
         {
             Console.Clear();
@@ -156,7 +170,6 @@ namespace EmpresaEvento
                 pass = Console.ReadLine().Trim();
                 if (emp.AltaAdministrador(nuevoEmail, pass) == Admin.ErroresAlta.Ok)
                 {
-                    emp.AltaAdministrador(nuevoEmail, pass);
                     opcion = "0";
                     UsuarioLogeado(emp.BuscarUsuario(nuevoEmail));
                 }
@@ -191,7 +204,6 @@ namespace EmpresaEvento
                 direccion = Console.ReadLine().Trim();
                 if (emp.AltaOrganizador(nuevoEmail, pass, nombre, telefono, direccion) == Admin.ErroresAlta.Ok)
                 {
-                    emp.AltaOrganizador(nuevoEmail, pass, nombre, telefono, direccion);
                     opcion = "0";
                     UsuarioLogeado(emp.BuscarUsuario(nuevoEmail));
                 }
