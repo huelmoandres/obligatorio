@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 using EmpresaEventoDominio;
 
 namespace EmpresaEvento
-{
+{ 
     class Program
-    { 
-        
+    {
+
         public static Empresa emp = Empresa.Instancia;
 
         static void Main(string[] args)
         {
-            MenuPrincipal();]
+            MenuPrincipal();
         }
-        
+
         public static void MenuPrincipal()
         {
             Console.Clear();
@@ -50,7 +50,7 @@ namespace EmpresaEvento
                 email = Console.ReadLine();
                 Console.Write("Ingrese una pass: ");
                 pass = Console.ReadLine();
-                if(Usuario.ValidoEmail(email))
+                if (Usuario.ValidoEmail(email))
                 {
                     Usuario tengoUsuario = emp.BuscarUsuario(email);
                     if (tengoUsuario != null)
@@ -129,7 +129,7 @@ namespace EmpresaEvento
                         ListarServicios();
                         break;
                     case "3":
-                        if(logueado is Organizador)
+                        if (logueado is Organizador)
                         {
                             Organizador org = logueado as Organizador;
                             RegistroEvento(org);
@@ -165,7 +165,7 @@ namespace EmpresaEvento
         {
             Console.Clear();
             Console.WriteLine("----- Listado de Usuarios -----");
-            foreach(Usuario u in emp.Usuarios)
+            foreach (Usuario u in emp.Usuarios)
             {
                 Console.WriteLine(u.ToString());
             }
@@ -189,7 +189,7 @@ namespace EmpresaEvento
             Console.WriteLine("Email: " + nuevoEmail);
             string pass = "";
             string opcion = "";
-            while(opcion != "0")
+            while (opcion != "0")
             {
                 Console.Write("\nIngrese una nueva contraseña para este email: ");
                 pass = Console.ReadLine().Trim();
@@ -232,7 +232,7 @@ namespace EmpresaEvento
                     opcion = "0";
                     UsuarioLogeado(emp.BuscarUsuario(nuevoEmail));
                 }
-                else if(opcion == "0")
+                else if (opcion == "0")
                 {
                     MenuPrincipal();
                 }
@@ -254,3 +254,4 @@ namespace EmpresaEvento
         }
     }
 }
+
