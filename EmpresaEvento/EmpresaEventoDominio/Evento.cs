@@ -116,11 +116,7 @@ namespace EmpresaEventoDominio
         #endregion
 
         #region Validaciones
-        public static bool CamposVacios(DateTime fecha, byte turno, string des, string cli, int cantAsistentes)
-        {
-            bool resultado = false;
-            if(fecha != null && (turno >= 0 && turno <= 2) && des != "" && cli != "" && cantAsistentes )
-        }
+
         public enum ErroresAlta{
             Ok,
             ControlAsistentes,

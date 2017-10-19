@@ -3,3 +3,8 @@ C:\Users\Laravel\Documents\ORT\Programacion-2\TrabajoP2\EmpresaEvento\EmpresaEve
 C:\Users\Laravel\Documents\ORT\Programacion-2\TrabajoP2\EmpresaEvento\EmpresaEventoDominio\bin\Debug\EmpresaEventoDominio.pdb
 C:\Users\Laravel\Documents\ORT\Programacion-2\TrabajoP2\EmpresaEvento\EmpresaEventoDominio\obj\Debug\EmpresaEventoDominio.dll
 C:\Users\Laravel\Documents\ORT\Programacion-2\TrabajoP2\EmpresaEvento\EmpresaEventoDominio\obj\Debug\EmpresaEventoDominio.pdb
+C:\Users\agu_2\Documents\ORT\Programacion2\Proyecto\EmpresaEvento\EmpresaEventoDominio\bin\Debug\EmpresaEventoDominio.dll
+C:\Users\agu_2\Documents\ORT\Programacion2\Proyecto\EmpresaEvento\EmpresaEventoDominio\bin\Debug\EmpresaEventoDominio.pdb
+C:\Users\agu_2\Documents\ORT\Programacion2\Proyecto\EmpresaEvento\EmpresaEventoDominio\obj\Debug\EmpresaEventoDominio.csprojResolveAssemblyReference.cache
+C:\Users\agu_2\Documents\ORT\Programacion2\Proyecto\EmpresaEvento\EmpresaEventoDominio\obj\Debug\EmpresaEventoDominio.dll
+C:\Users\agu_2\Documents\ORT\Programacion2\Proyecto\EmpresaEvento\EmpresaEventoDominio\obj\Debug\EmpresaEventoDominio.pdb
