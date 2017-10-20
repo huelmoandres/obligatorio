@@ -220,32 +220,54 @@ namespace EmpresaEvento
             Console.Clear();
             Console.WriteLine("Email: " + nuevoEmail);
             string pass = "";
-            string opcion = "";
             string nombre = "";
             string direccion = "";
             string telefono = "";
-            while (opcion != "0")
+            Console.Write("Ingrese una nueva contraseña para este email: ");
+            pass = Console.ReadLine().Trim();
+            while (!Usuario.ValidoPass(pass))
             {
-                Console.Write("\nIngrese una nueva contraseña para este email: ");
+                Console.Clear();
+                Console.WriteLine("Contraseña inválida. Debe contener: " +
+                                  "\n - Al menos uno de los siguientes caracteres ';' ',' '!' '.'" +
+                                  "\n - Tener un mínimo de 8 caracteres y una mayúscula.");
+                Console.Write("Ingrese una contraseña nuevamente: ");
                 pass = Console.ReadLine().Trim();
-                Console.Write("Ingrese nombre: ");
-                nombre = Console.ReadLine().Trim();
-                Console.Write("Ingrese teléfono: ");
-                telefono = Console.ReadLine().Trim();
-                Console.Write("Ingrese dirección: ");
-                direccion = Console.ReadLine().Trim();
-                if (emp.AltaOrganizador(nuevoEmail, pass, nombre, telefono, direccion) == Usuario.ErroresAlta.Ok)
-                {
-                    UsuarioLogeado(emp.BuscarUsuario(nuevoEmail));
-                    opcion = "0";
-                }
-                else
-                {
-                    Console.Clear();
-                    Console.WriteLine("Datos no válidos.\n");
-                    opcion = Salir();
-                }
             }
+            Console.Clear();
+            Console.Write("Ingrese un nombre: ");
+            nombre = Console.ReadLine().Trim();
+            while (!Usuario.ValidoNombre(nombre))
+            {
+                Console.Clear();
+                Console.Write("Nombre inválido. Ingrese uno nuevamente: ");
+                nombre = Console.ReadLine().Trim();
+            }
+            Console.Clear();
+            Console.Write("Ingrese teléfono: ");
+            telefono = Console.ReadLine().Trim();
+            while (!Usuario.ValidoTel(telefono))
+            {
+                Console.Clear();
+                Console.Write("Teléfono inválido. Ingrese uno nuevamente: ");
+                telefono = Console.ReadLine().Trim();
+            }
+            Console.Clear();
+            Console.Write("Ingrese dirección: ");
+            direccion = Console.ReadLine().Trim();
+            while (!Usuario.ValidoDir(direccion))
+            {
+                Console.Clear();
+                Console.Write("Dirección inválida. Ingrese una nuevamente: ");
+                direccion = Console.ReadLine().Trim();
+            }
+            emp.AltaOrganizador(nuevoEmail, pass, nombre, telefono, direccion);
+            UsuarioLogeado(emp.BuscarUsuario(nuevoEmail));
+        }
+
+        public static void ValidoVacio(string mensaje, string opcion)
+        {
+
         }
 
         public static string Salir()

@@ -109,7 +109,7 @@ namespace EmpresaEventoDominio
         public static bool ValidoTel(string tel)
         {
             bool resultado = false;
-            if (tel != "")
+            if (tel.Length >= 5)
             {
                 resultado = true;
             }
