@@ -10,20 +10,20 @@ namespace EmpresaEvento
     class Program
     {
 
-        public static Empresa emp = Empresa.Instancia;
+        private static Empresa emp = Empresa.Instancia;
 
         static void Main(string[] args)
         {
             MenuPrincipal();
         }
 
-        public static void MenuPrincipal()
+        private static void MenuPrincipal()
         {
-            Console.Clear();
-            Console.WriteLine("----- Login -----");
             string opcion = "";
             while (opcion != "0")
             {
+                Console.Clear();
+                Console.WriteLine("----- Login -----");
                 Console.WriteLine("1 - Ingrese usuario");
                 Console.WriteLine("0 - Salir");
                 Console.Write("Seleccione una opción: ");
@@ -32,7 +32,7 @@ namespace EmpresaEvento
                 {
                     Ingresar();
                 }
-                else
+                else if (opcion != "0")
                 {
                     Console.Clear();
                     Console.WriteLine("La opción ingresada no es correcta.\n");
@@ -40,7 +40,7 @@ namespace EmpresaEvento
             }
         }
 
-        public static void Ingresar()
+        private static void Ingresar()
         {
             string email = "";
             string pass = "";
@@ -48,16 +48,17 @@ namespace EmpresaEvento
             while (opcion != "0") {
                 Console.Write("\nIngrese un email: ");
                 email = Console.ReadLine();
-                Console.Write("Ingrese una pass: ");
-                pass = Console.ReadLine();
                 if (Usuario.ValidoEmail(email))
                 {
                     Usuario tengoUsuario = emp.BuscarUsuario(email);
                     if (tengoUsuario != null)
                     {
+                        Console.Write("Ingrese una pass: ");
+                        pass = Console.ReadLine();
                         if (tengoUsuario.Pass == pass)
                         {
                             UsuarioLogeado(tengoUsuario);
+                            opcion = "0";
                         }
                         else
                         {
@@ -81,12 +82,13 @@ namespace EmpresaEvento
                             {
                                 case "1":
                                     AltaAdmin(email);
+                                    opcion = "0";
                                     break;
                                 case "2":
                                     AltaOrganizador(email);
+                                    opcion = "0";
                                     break;
                                 case "0":
-                                    MenuPrincipal();
                                     break;
                                 default:
                                     Console.Clear();
@@ -103,10 +105,9 @@ namespace EmpresaEvento
                     opcion = Salir();
                 }
             }
-            MenuPrincipal();
         }
 
-        public static void UsuarioLogeado(Usuario logueado)
+        private static void UsuarioLogeado(Usuario logueado)
         {
             string opcion = "";
             while (opcion != "0")
@@ -140,7 +141,6 @@ namespace EmpresaEvento
                         }
                         break;
                     case "0":
-                        MenuPrincipal();
                         break;
                     default:
                         Console.Clear();
@@ -168,6 +168,14 @@ namespace EmpresaEvento
             foreach (Usuario u in emp.Usuarios)
             {
                 Console.WriteLine(u.ToString());
+                if (u.Rol == 0)
+                {
+                    Console.WriteLine("Rol: Admin\n");
+                }
+                else if(u.Rol == 1)
+                {
+                    Console.WriteLine("Rol: Organizador\n");
+                }
             }
             Console.WriteLine("-------------------------------");
         }
@@ -193,10 +201,10 @@ namespace EmpresaEvento
             {
                 Console.Write("\nIngrese una nueva contraseña para este email: ");
                 pass = Console.ReadLine().Trim();
-                if (emp.AltaAdministrador(nuevoEmail, pass) == Admin.ErroresAlta.Ok)
+                if (emp.AltaAdministrador(nuevoEmail, pass) == Usuario.ErroresAlta.Ok)
                 {
-                    opcion = "0";
                     UsuarioLogeado(emp.BuscarUsuario(nuevoEmail));
+                    opcion = "0";
                 }
                 else
                 {
@@ -205,7 +213,6 @@ namespace EmpresaEvento
                     opcion = Salir();
                 }
             }
-            MenuPrincipal();
         }
 
         public static void AltaOrganizador(string nuevoEmail)
@@ -227,14 +234,10 @@ namespace EmpresaEvento
                 telefono = Console.ReadLine().Trim();
                 Console.Write("Ingrese dirección: ");
                 direccion = Console.ReadLine().Trim();
-                if (emp.AltaOrganizador(nuevoEmail, pass, nombre, telefono, direccion) == Admin.ErroresAlta.Ok)
+                if (emp.AltaOrganizador(nuevoEmail, pass, nombre, telefono, direccion) == Usuario.ErroresAlta.Ok)
                 {
-                    opcion = "0";
                     UsuarioLogeado(emp.BuscarUsuario(nuevoEmail));
-                }
-                else if (opcion == "0")
-                {
-                    MenuPrincipal();
+                    opcion = "0";
                 }
                 else
                 {
@@ -243,13 +246,12 @@ namespace EmpresaEvento
                     opcion = Salir();
                 }
             }
-            MenuPrincipal();
         }
 
-        public static String Salir()
+        public static string Salir()
         {
             Console.Write("¿Desea salir?\n0 - Salir\nCualquier tecla para continuar: ");
-            String opcion = Console.ReadLine().Trim();
+            string opcion = Console.ReadLine().Trim();
             return opcion;
         }
     }
