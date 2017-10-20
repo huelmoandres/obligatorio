@@ -109,6 +109,7 @@ namespace EmpresaEvento
 
         private static void UsuarioLogeado(Usuario logueado)
         {
+            Console.Clear();
             string opcion = "";
             while (opcion != "0")
             {
@@ -196,23 +197,19 @@ namespace EmpresaEvento
             Console.Clear();
             Console.WriteLine("Email: " + nuevoEmail);
             string pass = "";
-            string opcion = "";
-            while (opcion != "0")
+            Console.Write("Ingrese una nueva contraseña para este email: ");
+            pass = Console.ReadLine().Trim();
+            while (!Usuario.ValidoPass(pass))
             {
-                Console.Write("\nIngrese una nueva contraseña para este email: ");
+                Console.Clear();
+                Console.WriteLine("Contraseña inválida. Debe contener: " +
+                                    "\n - Al menos uno de los siguientes caracteres ';' ',' '!' '.'" +
+                                    "\n - Tener un mínimo de 8 caracteres y una mayúscula.");
+                Console.Write("Ingrese una contraseña nuevamente: ");
                 pass = Console.ReadLine().Trim();
-                if (emp.AltaAdministrador(nuevoEmail, pass) == Usuario.ErroresAlta.Ok)
-                {
-                    UsuarioLogeado(emp.BuscarUsuario(nuevoEmail));
-                    opcion = "0";
-                }
-                else
-                {
-                    Console.Clear();
-                    Console.WriteLine("Contraseña incorrecta.\n");
-                    opcion = Salir();
-                }
             }
+            emp.AltaAdministrador(nuevoEmail, pass);
+            UsuarioLogeado(emp.BuscarUsuario(nuevoEmail));
         }
 
         public static void AltaOrganizador(string nuevoEmail)
