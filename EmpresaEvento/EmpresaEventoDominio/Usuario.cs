@@ -7,11 +7,12 @@ using System.Text.RegularExpressions;
 
 namespace EmpresaEventoDominio
 {
-    public abstract class Usuario
+    public class Usuario
     {
         #region Atributos
         private string email;
         private string pass;
+        private byte rol;
         #endregion
 
         #region Propiedades
@@ -39,13 +40,26 @@ namespace EmpresaEventoDominio
                 pass = value;
             }
         }
+
+        public byte Rol
+        {
+            get
+            {
+                return rol;
+            }
+            set
+            {
+                rol = value;
+            }
+        }
         #endregion
 
         #region Constructor
-        public Usuario(string email, string pass)
+        public Usuario(string email, string pass, byte rol)
         {
             this.Email = email;
             this.Pass = pass;
+            this.Rol = rol;
         }
         #endregion
 
@@ -120,5 +134,11 @@ namespace EmpresaEventoDominio
             ErrorDir
         }
         #endregion
+
+        public override string ToString()
+        {
+            return "Email: " + this.Email +
+                "\nContraseña: " + this.Pass;
+        }
     }
 }

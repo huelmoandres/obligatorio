@@ -15,8 +15,9 @@ namespace EmpresaEventoDominio
         private List<Evento> eventos = new List<Evento>();
 
         #region Usuarios pre-cargados
-        private Usuario a1 = new Admin("admin@eventos17.com", "Admin!99");
+        private Usuario a1 = new Usuario("admin@eventos17.com", "Admin!99", 0);
         #endregion
+
         #region Servicios pre-cargados
         private Servicio s1 = new Servicio("Cocina", "El servicio incluye plato principal y postre", 480);
         private Servicio s2 = new Servicio("Fotografía", "El servicio incluye cinco fotos por persona", 120);
@@ -76,18 +77,18 @@ namespace EmpresaEventoDominio
         #endregion
 
         #region Altas
-        public Admin.ErroresAlta AltaAdministrador(string email, string pass)
+        public Usuario.ErroresAlta AltaAdministrador(string email, string pass)
         {
-            Admin.ErroresAlta resultado = Admin.ErroresAlta.Ok;
-            if (!Admin.ValidoEmail(email))
+            Usuario.ErroresAlta resultado = Usuario.ErroresAlta.Ok;
+            if (!Usuario.ValidoEmail(email))
             {
-                resultado = Admin.ErroresAlta.ErrorEmail;
-            } else if(!Admin.ValidoPass(pass))
+                resultado = Usuario.ErroresAlta.ErrorEmail;
+            } else if(!Usuario.ValidoPass(pass))
             {
-                resultado = Admin.ErroresAlta.ErrorPass;
+                resultado = Usuario.ErroresAlta.ErrorPass;
             } else
             {
-                Admin a = new Admin(email, pass);
+                Usuario a = new Usuario(email, pass, 0);
                 usuarios.Add(a);
             }
 
@@ -95,7 +96,7 @@ namespace EmpresaEventoDominio
         }
         public Organizador.ErroresAlta AltaOrganizador(string email, string pass, string nombre, string tel, string dir)
         {
-            Organizador.ErroresAlta resultado = Admin.ErroresAlta.Ok;
+            Organizador.ErroresAlta resultado = Usuario.ErroresAlta.Ok;
             if (!Organizador.ValidoEmail(email))
             {
                 resultado = Organizador.ErroresAlta.ErrorEmail;
@@ -118,7 +119,7 @@ namespace EmpresaEventoDominio
             }
             else
             {
-                Organizador o = new Organizador(email, pass, nombre, tel, dir);
+                Organizador o = new Organizador(email, pass, 1, nombre, tel, dir);
                 usuarios.Add(o);
             }
 
