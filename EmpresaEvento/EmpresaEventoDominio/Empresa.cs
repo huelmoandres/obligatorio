@@ -153,7 +153,7 @@ namespace EmpresaEventoDominio
 
             return resultado;
         }
-        public Comun.ErroresAlta AltaComun(DateTime fec, byte tur, string des, string cli, int cAsis, double dur, Servicio s)
+        public Comun.ErroresAlta AltaComun(DateTime fec, byte tur, string des, string cli, int cAsis, double dur, Servicio s, int personasServicio)
         {
             Comun.ErroresAlta resultado = Comun.ErroresAlta.Ok;
             if (!Comun.ValidoFecha(fec))
@@ -179,6 +179,10 @@ namespace EmpresaEventoDominio
             else if(BuscarFechaEvento(fec))
             {
                 resultado = Comun.ErroresAlta.FechaRepetida;
+            }
+            else if (personasServicio > cAsis)
+            {
+                resultado = Comun.ErroresAlta.InsuficientesPersonas;
             }
             else
             {

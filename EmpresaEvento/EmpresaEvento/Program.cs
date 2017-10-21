@@ -180,19 +180,78 @@ namespace EmpresaEvento
                 Console.Write("\nIngrese un turno: " +
                                   "\n1- Mañana" +
                                   "\n2- Tarde" +
-                                  "\n3- Noche");                
+                                  "\n3- Noche");
                 byte turno = FormatoByte("\nIngrese la opción correcta: ");
-                while(turno != 1 || turno != 2 || turno != 3)
+                while (turno != 1 && turno != 2 && turno != 3)
                 {
                     Console.Clear();
                     Console.WriteLine("Opción incorrecta.");
+                    Console.WriteLine("\nIngrese un turno: " +
+                                  "\n1- Mañana" +
+                                  "\n2- Tarde" +
+                                  "\n3- Noche");
                     turno = FormatoByte("Ingrese la opción correcta: ");
                 }
-              
-
+                Console.Write("\nIngrese una descripción: ");
+                string des = Console.ReadLine();
+                while (!Evento.ValidoVacio(des))
+                {
+                    Console.Clear();
+                    Console.Write("Descripción inválida. Ingrese una nuevamente: ");
+                    des = Console.ReadLine().Trim();
+                }
+                Console.Write("\nIngrese el nombre del cliente: ");
+                string cliente = Console.ReadLine();
+                while (!Evento.ValidoVacio(cliente))
+                {
+                    Console.Clear();
+                    Console.Write("Nombre inválido. Ingrese uno nuevamente: ");
+                    cliente = Console.ReadLine().Trim();
+                }
+                Console.WriteLine("\nIngrese si es un evento común o premium: " +
+                                  "\n1- Común" +
+                                  "\n2- Premium");
+                Console.Write("Ingrese la opción correcta: ");
+                string tipo = Console.ReadLine().Trim();
+                while (tipo != "1" && tipo != "2")
+                {
+                    Console.Clear();
+                    Console.WriteLine("Opción incorrecta.");
+                    Console.WriteLine("Ingrese si es un evento común o premium: " +
+                                      "\n1- Común" +
+                                      "\n2- Premium");
+                    Console.Write("Ingrese la opción correcta: ");
+                    tipo = Console.ReadLine().Trim();
+                }
+                int cantidadPersonas = FormatoEntero("\nIngrese cantidad de peronas que van a asistir: ");
+                if (tipo == "1") //Común
+                {
+                    while (!Comun.ControlAsistentes(cantidadPersonas))
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Error. Recuerde que la cantidad de personas no pueden ser más de 10 en eventos comunes.");
+                        cantidadPersonas = FormatoEntero("Ingrese cantidad de nuevo: ");
+                    }
+                    Console.Clear();
+                    double duracion = FormatoDecimal("\nIngrese la duración del evento: ");
+                    while (!Comun.ValidoDuracion(duracion))
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Error. Recuerde que la duración no puede ser más de 4 horas en eventos comunes.");
+                        duracion = FormatoDecimal("Ingrese duración de nuevo: ");
+                    }
+                }
+                else if (tipo == "2") // Premium
+                {
+                    while (cantidadPersonas < 0 && cantidadPersonas > 100)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Error. Recuerde que la cantidad de personas no pueden ser más de 100 en eventos Premium.");
+                        cantidadPersonas = FormatoEntero("Ingrese cantidad de nuevo: ");
+                    }
+                }
             }
         }
-
         private static void ListarUsuarios()
         {
             Console.Clear();
@@ -362,15 +421,40 @@ namespace EmpresaEvento
         {
             byte num = 0;
             Console.WriteLine(texto);
-            string strFecha = Console.ReadLine();
-            while (!Byte.TryParse(strFecha, out num))
+            string strTurno = Console.ReadLine();
+            while (!byte.TryParse(strTurno, out num))
             {
                 Console.Write("Selección no válida. Ingrese una nuevamente: ");
-                strFecha = Console.ReadLine();
+                strTurno = Console.ReadLine();
             }
             return num;
         }
 
+        public static int FormatoEntero(string texto)
+        {
+            int num = 0;
+            Console.WriteLine(texto);
+            string strCant = Console.ReadLine();
+            while (!int.TryParse(strCant, out num))
+            {
+                Console.Write("Selección no válida. Ingrese una nuevamente: ");
+                strCant = Console.ReadLine();
+            }
+            return num;
+        }
+
+        public static double FormatoDecimal(string texto)
+        {
+            double num = 0;
+            Console.WriteLine(texto);
+            string strDur = Console.ReadLine();
+            while (!double.TryParse(strDur, out num))
+            {
+                Console.Write("Selección no válida. Ingrese una nuevamente: ");
+                strDur = Console.ReadLine();
+            }
+            return num;
+        }
         public static string Salir()
         {
             Console.Write("¿Desea salir?\n0 - Salir\nCualquier tecla para continuar: ");
