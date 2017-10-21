@@ -10,7 +10,7 @@ namespace EmpresaEventoDominio
     {
         #region Atributos
         private double duracion;
-        private static double limpieza;
+        private static double limpieza = 300;
         #endregion
 
         #region Propiedades
@@ -44,10 +44,19 @@ namespace EmpresaEventoDominio
         #endregion
 
         #region Validaciones
+        public static bool ValidoDuracion(double dur)
+        {
+            bool resultado = false;
+            if(dur > 0 && dur < 24)
+            {
+                resultado = true;
+            }
+            return resultado;
+        }
         public static bool ControlAsistentes(int asistentes)
         {
             bool resultado = false;
-            if (asistentes <= 10)
+            if (asistentes > 0 && asistentes <= 10)
             {
                 resultado = true;
             }

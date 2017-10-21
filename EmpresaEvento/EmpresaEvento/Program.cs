@@ -9,8 +9,8 @@ namespace EmpresaEvento
 { 
     class Program
     {
-
         private static Empresa emp = Empresa.Instancia;
+        private static Usuario logeado = null;
 
         static void Main(string[] args)
         {
@@ -25,6 +25,7 @@ namespace EmpresaEvento
                 Console.Clear();
                 Console.WriteLine("----- Login -----");
                 Console.WriteLine("1 - Ingrese usuario");
+                Console.WriteLine("2 - Registrarse");
                 Console.WriteLine("0 - Salir");
                 Console.Write("Seleccione una opción: ");
                 opcion = Console.ReadLine().Trim();
@@ -32,10 +33,45 @@ namespace EmpresaEvento
                 {
                     Ingresar();
                 }
+                else if(opcion == "2")
+                {
+                    Registro();
+                }
                 else if (opcion != "0")
                 {
                     Console.Clear();
                     Console.WriteLine("La opción ingresada no es correcta.\n");
+                }
+            }
+        }
+
+        private static void Registro()
+        {
+            Console.Clear();
+            Console.WriteLine("1. Registrarse como administrador");
+            Console.WriteLine("2. Registrarse como organizador");
+            Console.WriteLine("0. Salir");
+            string opcion = "";
+            while (opcion != "0")
+            {
+                Console.Write("Seleccione una opción: ");
+                opcion = Console.ReadLine().Trim();
+                switch (opcion)
+                {
+                    case "1":
+                        AltaAdmin();
+                        opcion = "0";
+                        break;
+                    case "2":
+                        AltaOrganizador();
+                        opcion = "0";
+                        break;
+                    case "0":
+                        break;
+                    default:
+                        Console.Clear();
+                        Console.WriteLine("La opción ingresada no es correcta.\n");
+                        break;
                 }
             }
         }
@@ -46,57 +82,15 @@ namespace EmpresaEvento
             string pass = "";
             string opcion = "";
             while (opcion != "0") {
-                Console.Write("\nIngrese un email: ");
+                Console.Write("\nIngrese email: ");
                 email = Console.ReadLine();
-                if (Usuario.ValidoEmail(email))
+                Console.Write("Ingrese una pass: ");
+                pass = Console.ReadLine();
+                logeado = emp.BuscarUsuario(email);
+                if (logeado != null && logeado.Pass == pass)
                 {
-                    Usuario tengoUsuario = emp.BuscarUsuario(email);
-                    if (tengoUsuario != null)
-                    {
-                        Console.Write("Ingrese una pass: ");
-                        pass = Console.ReadLine();
-                        if (tengoUsuario.Pass == pass)
-                        {
-                            UsuarioLogeado(tengoUsuario);
-                            opcion = "0";
-                        }
-                        else
-                        {
-                            Console.Clear();
-                            Console.WriteLine("¡Datos erróneos!\n");
-                            opcion = Salir();
-                        }
-                    }
-                    else
-                    {
-                        Console.Clear();
-                        Console.WriteLine("Email no registrado\n");
-                        Console.WriteLine("1. Registrarse como administrador");
-                        Console.WriteLine("2. Registrarse como organizador");
-                        Console.WriteLine("0. Salir");
-                        while (opcion != "0")
-                        {
-                            Console.Write("Seleccione una opción: ");
-                            opcion = Console.ReadLine().Trim();
-                            switch (opcion)
-                            {
-                                case "1":
-                                    AltaAdmin(email);
-                                    opcion = "0";
-                                    break;
-                                case "2":
-                                    AltaOrganizador(email);
-                                    opcion = "0";
-                                    break;
-                                case "0":
-                                    break;
-                                default:
-                                    Console.Clear();
-                                    Console.WriteLine("La opción ingresada no es correcta.\n");
-                                    break;
-                            }
-                        }
-                    }
+                    UsuarioLogeado();
+                    opcion = "0";
                 }
                 else
                 {
@@ -107,14 +101,14 @@ namespace EmpresaEvento
             }
         }
 
-        private static void UsuarioLogeado(Usuario logueado)
+        private static void UsuarioLogeado()
         {
             Console.Clear();
             string opcion = "";
             while (opcion != "0")
             {
                 Console.WriteLine("\n----- Menú -----");
-                Console.WriteLine("¡Bienvenido " + logueado.Email + "!");
+                Console.WriteLine("¡Bienvenido " + logeado.Email + "!");
                 Console.WriteLine("1 - Listar todos los usuarios");
                 Console.WriteLine("2 - Listar catálogo de servicios");
                 Console.WriteLine("3 - Registrar un evento");
@@ -131,15 +125,16 @@ namespace EmpresaEvento
                         ListarServicios();
                         break;
                     case "3":
-                        if (logueado is Organizador)
+                        if (logeado is Organizador)
                         {
-                            Organizador org = logueado as Organizador;
-                            RegistroEvento(org);
+                            RegistroEvento();
                         } else
                         {
                             Console.Clear();
                             Console.WriteLine("Acceso denegado. Debe ser organizador.");
                         }
+                        break;
+                    case "4":
                         break;
                     case "0":
                         break;
@@ -152,14 +147,27 @@ namespace EmpresaEvento
 
         }
 
-        private static void RegistroEvento(Organizador org)
+        private static void RegistroEvento()
         {
-            Console.Clear();
-            Console.WriteLine("Nombre: " + org.Nombre +
-                              "Teléfono: " + org.Telefono +
-                              "Dirección: " + org.Direccion +
-                              "Fecha de registro: " + org.Fecha);
-
+            if (logeado is Organizador)
+            {
+                Console.Clear();
+                Organizador org = (Organizador)logeado;
+                Console.Clear();
+                Console.WriteLine("----- Registro de Eventos -----");
+                Console.WriteLine("Nombre: " + org.Nombre +
+                                  "\nTeléfono: " + org.Telefono +
+                                  "\nDirección: " + org.Direccion +
+                                  "\nFecha de registro: " + org.Fecha + "\n");
+                DateTime fecha = FormatoFecha("Ingrese una fecha: ");
+                while (!Comun.ValidoFecha(fecha))
+                {
+                    Console.Clear();
+                    Console.WriteLine("Fecha antigua.");
+                    Console.Write("Ingrese una fecha nuevamente: ");
+                    email = Console.ReadLine().Trim();
+                }
+            }
         }
 
         private static void ListarUsuarios()
@@ -192,11 +200,21 @@ namespace EmpresaEvento
             Console.WriteLine("-------------------------------");
         }
 
-        public static void AltaAdmin(string nuevoEmail)
+        public static void AltaAdmin()
         {
             Console.Clear();
-            Console.WriteLine("Email: " + nuevoEmail);
             string pass = "";
+            string email = "";
+            Console.Write("Ingrese un email: ");
+            email = Console.ReadLine().Trim();
+            while (!Usuario.ValidoEmail(email))
+            {
+                Console.Clear();
+                Console.WriteLine("El email no es correcto.");
+                Console.Write("Ingrese un email nuevamente: ");
+                email = Console.ReadLine().Trim();
+            }
+            Console.Clear();
             Console.Write("Ingrese una nueva contraseña para este email: ");
             pass = Console.ReadLine().Trim();
             while (!Usuario.ValidoPass(pass))
@@ -208,18 +226,29 @@ namespace EmpresaEvento
                 Console.Write("Ingrese una contraseña nuevamente: ");
                 pass = Console.ReadLine().Trim();
             }
-            emp.AltaAdministrador(nuevoEmail, pass);
-            UsuarioLogeado(emp.BuscarUsuario(nuevoEmail));
+            emp.AltaAdministrador(email, pass);
+            logeado = emp.BuscarUsuario(email);
+            UsuarioLogeado();
         }
 
-        public static void AltaOrganizador(string nuevoEmail)
+        public static void AltaOrganizador()
         {
             Console.Clear();
-            Console.WriteLine("Email: " + nuevoEmail);
             string pass = "";
             string nombre = "";
             string direccion = "";
             string telefono = "";
+            string email = "";
+            Console.Write("Ingrese un email: ");
+            email = Console.ReadLine().Trim();
+            while (!Usuario.ValidoEmail(email))
+            {
+                Console.Clear();
+                Console.WriteLine("El email no es correcto.");
+                Console.Write("Ingrese un email nuevamente: ");
+                email = Console.ReadLine().Trim();
+            }
+            Console.Clear();
             Console.Write("Ingrese una nueva contraseña para este email: ");
             pass = Console.ReadLine().Trim();
             while (!Usuario.ValidoPass(pass))
@@ -258,15 +287,23 @@ namespace EmpresaEvento
                 Console.Write("Dirección inválida. Ingrese una nuevamente: ");
                 direccion = Console.ReadLine().Trim();
             }
-            emp.AltaOrganizador(nuevoEmail, pass, nombre, telefono, direccion);
-            UsuarioLogeado(emp.BuscarUsuario(nuevoEmail));
+            emp.AltaOrganizador(email, pass, nombre, telefono, direccion);
+            logeado = emp.BuscarUsuario(email);
+            UsuarioLogeado();
         }
 
-        public static void ValidoVacio(string mensaje, string opcion)
+        public static DateTime FormatoFecha(string texto)
         {
-
+            DateTime fecha = new DateTime();
+            Console.WriteLine(texto);
+            string strFecha = Console.ReadLine();
+            while (!DateTime.TryParse(strFecha, out fecha))
+            {
+                Console.Write("Formato de fecha no válido. Ingrese una nuevamente: ");
+                strFecha = Console.ReadLine();
+            }
+            return fecha;
         }
-
         public static string Salir()
         {
             Console.Write("¿Desea salir?\n0 - Salir\nCualquier tecla para continuar: ");

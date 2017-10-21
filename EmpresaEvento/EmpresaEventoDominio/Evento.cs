@@ -117,11 +117,46 @@ namespace EmpresaEventoDominio
 
         #region Validaciones
 
+        public static bool ValidoFecha(DateTime fecha)
+        {
+            bool resultado = false;
+            if (fecha >= DateTime.Today)
+            {
+                resultado = true;
+            }
+            return resultado;
+        }
+        public static bool ValidTurno(byte turno)
+        {
+            bool resultado = false;
+            if (turno >= 1 && turno <= 3)
+            {
+                resultado = true;
+            }
+            return resultado;
+        }
+        public static bool ValidoVacio(string campo)
+        {
+            bool resultado = false;
+            if (campo != "")
+            {
+                resultado = true;
+            }
+            return resultado;
+        }
         public enum ErroresAlta{
             Ok,
-            ControlAsistentes,
-            CamposVacios
+            ErrorFecha,
+            ErrorTurno,
+            ErrorVacio,
+            ErrorDuracion,
+            ErrorAsistentes
         }
         #endregion
+
+        public void AltaContrato(Contrato c)
+        {
+            contratos.Add(c);
+        }
     }
 }

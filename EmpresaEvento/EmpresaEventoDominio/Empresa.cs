@@ -16,6 +16,7 @@ namespace EmpresaEventoDominio
 
         #region Usuarios pre-cargados
         private Usuario a1 = new Usuario("admin@eventos17.com", "Admin!99", 0);
+        private Organizador o1 = new Organizador("org@eventos17.com", "Organizador!99", 1, "Sergio", "091383578", "18 de Julio 2237");
         #endregion
 
         #region Servicios pre-cargados
@@ -40,11 +41,17 @@ namespace EmpresaEventoDominio
         {
             get { return usuarios; }
         }
+
+        public List<Evento> Eventos
+        {
+            get { return eventos; }
+        }
         #endregion
 
         #region Constructor
         private Empresa() {
             usuarios.Add(a1);
+            usuarios.Add(o1);
             servicios.Add(s1);
             servicios.Add(s2);
             servicios.Add(s3);
@@ -121,6 +128,39 @@ namespace EmpresaEventoDominio
             {
                 Organizador o = new Organizador(email, pass, 1, nombre, tel, dir);
                 usuarios.Add(o);
+            }
+
+            return resultado;
+        }
+        public Comun.ErroresAlta AltaComun(DateTime fec, byte tur, string des, string cli, int cAsis, double dur, Servicio s)
+        {
+            Comun.ErroresAlta resultado = Comun.ErroresAlta.Ok;
+            if (!Comun.ValidoFecha(fec))
+            {
+                resultado = Comun.ErroresAlta.ErrorFecha;
+            }
+            else if (!Comun.ValidTurno(tur))
+            {
+                resultado = Comun.ErroresAlta.ErrorTurno;
+            }
+            else if (!Comun.ValidoVacio(des) || !Comun.ValidoVacio(cli))
+            {
+                resultado = Comun.ErroresAlta.ErrorVacio;
+            }
+            else if (!Comun.ValidoDuracion(dur))
+            {
+                resultado = Comun.ErroresAlta.ErrorDuracion;
+            }
+            else if (!Comun.ControlAsistentes(cAsis))
+            {
+                resultado = Comun.ErroresAlta.ErrorAsistentes;
+            }
+            else
+            {
+                Comun c = new Comun(fec, tur, des, cli, cAsis, dur);
+                Contrato con = new Contrato(s, 5);
+                c.AltaContrato(con);
+                eventos.Add(c);
             }
 
             return resultado;

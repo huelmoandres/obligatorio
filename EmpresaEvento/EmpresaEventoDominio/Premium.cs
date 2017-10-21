@@ -32,7 +32,7 @@ namespace EmpresaEventoDominio
         public static bool ControlAsistentes(int asistentes)
         {
             bool resultado = false;
-            if (asistentes <= 100)
+            if (asistentes > 0 && asistentes <= 100)
             {
                 resultado = true;
             }
