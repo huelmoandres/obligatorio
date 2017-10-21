@@ -70,13 +70,25 @@ namespace EmpresaEventoDominio
             }
             return usu;
         }
-        public Evento BuscarEvento(DateTime fecha)
+        public bool BuscarFechaEvento(DateTime fecha)
+        {
+            bool esta = false;
+            int i = 0;
+            while (i < eventos.Count && !esta)
+            {
+                if (eventos[i].Fecha == fecha) esta = true;
+                i++;
+            }
+            return esta;
+        }
+
+        public Evento BuscarEvento(int id)
         {
             Evento eve = null;
             int i = 0;
             while (i < eventos.Count && eve == null)
             {
-                if (eventos[i].Fecha == fecha) eve = eventos[i];
+                if (eventos[i].Id == id) eve = eventos[i];
                 i++;
             }
             return eve;
@@ -87,13 +99,18 @@ namespace EmpresaEventoDominio
         public Usuario.ErroresAlta AltaAdministrador(string email, string pass)
         {
             Usuario.ErroresAlta resultado = Usuario.ErroresAlta.Ok;
-            if (!Usuario.ValidoEmail(email))
+            if(!Usuario.ValidoEmail(email))
             {
                 resultado = Usuario.ErroresAlta.ErrorEmail;
             } else if(!Usuario.ValidoPass(pass))
             {
                 resultado = Usuario.ErroresAlta.ErrorPass;
-            } else
+            }
+            else if(BuscarUsuario(email) != null)
+            {
+                resultado = Usuario.ErroresAlta.UsuarioRepetido;
+            }
+            else
             {
                 Usuario a = new Usuario(email, pass, 0);
                 usuarios.Add(a);
@@ -123,6 +140,10 @@ namespace EmpresaEventoDominio
             else if (!Organizador.ValidoDir(dir))
             {
                 resultado = Organizador.ErroresAlta.ErrorDir;
+            }
+            else if (BuscarUsuario(email) != null)
+            {
+                resultado = Usuario.ErroresAlta.UsuarioRepetido;
             }
             else
             {
@@ -154,6 +175,10 @@ namespace EmpresaEventoDominio
             else if (!Comun.ControlAsistentes(cAsis))
             {
                 resultado = Comun.ErroresAlta.ErrorAsistentes;
+            }
+            else if(BuscarFechaEvento(fec))
+            {
+                resultado = Comun.ErroresAlta.FechaRepetida;
             }
             else
             {

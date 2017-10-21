@@ -85,7 +85,7 @@ namespace EmpresaEventoDominio
             return resultado;
         }
 
-        public static bool ValidoEmail(String email)
+        public static bool ValidoEmail(string email)
         {
             bool resultado = false;
             string formato = "\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*";
@@ -106,6 +106,7 @@ namespace EmpresaEventoDominio
             }
             return resultado;
         }
+
         public static bool ValidoTel(string tel)
         {
             bool resultado = false;
@@ -115,6 +116,7 @@ namespace EmpresaEventoDominio
             }
             return resultado;
         }
+
         public static bool ValidoDir(string dir)
         {
             bool resultado = false;
@@ -124,6 +126,7 @@ namespace EmpresaEventoDominio
             }
             return resultado;
         }
+        
         public enum ErroresAlta
         {
             Ok,
@@ -131,7 +134,8 @@ namespace EmpresaEventoDominio
             ErrorPass,
             ErrorNombre,
             ErrorTel,
-            ErrorDir
+            ErrorDir,
+            UsuarioRepetido
         }
         #endregion
 

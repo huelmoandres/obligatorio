@@ -47,7 +47,7 @@ namespace EmpresaEventoDominio
         public static bool ValidoDuracion(double dur)
         {
             bool resultado = false;
-            if(dur > 0 && dur < 24)
+            if(dur > 0 && dur < 4)
             {
                 resultado = true;
             }

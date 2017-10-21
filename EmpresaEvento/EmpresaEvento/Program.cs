@@ -45,6 +45,31 @@ namespace EmpresaEvento
             }
         }
 
+        private static void Ingresar()
+        {
+            string email = "";
+            string pass = "";
+            string opcion = "";
+            while (opcion != "0") {
+                Console.Write("\nIngrese email: ");
+                email = Console.ReadLine();
+                Console.Write("Ingrese una pass: ");
+                pass = Console.ReadLine();
+                logeado = emp.BuscarUsuario(email);
+                if (logeado != null && logeado.Pass == pass)
+                {
+                    UsuarioLogeado();
+                    opcion = "0";
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("¡Datos erróneos!\n");
+                    opcion = Salir();
+                }
+            }
+        }
+
         private static void Registro()
         {
             Console.Clear();
@@ -72,31 +97,6 @@ namespace EmpresaEvento
                         Console.Clear();
                         Console.WriteLine("La opción ingresada no es correcta.\n");
                         break;
-                }
-            }
-        }
-
-        private static void Ingresar()
-        {
-            string email = "";
-            string pass = "";
-            string opcion = "";
-            while (opcion != "0") {
-                Console.Write("\nIngrese email: ");
-                email = Console.ReadLine();
-                Console.Write("Ingrese una pass: ");
-                pass = Console.ReadLine();
-                logeado = emp.BuscarUsuario(email);
-                if (logeado != null && logeado.Pass == pass)
-                {
-                    UsuarioLogeado();
-                    opcion = "0";
-                }
-                else
-                {
-                    Console.Clear();
-                    Console.WriteLine("¡Datos erróneos!\n");
-                    opcion = Salir();
                 }
             }
         }
@@ -159,14 +159,25 @@ namespace EmpresaEvento
                                   "\nTeléfono: " + org.Telefono +
                                   "\nDirección: " + org.Direccion +
                                   "\nFecha de registro: " + org.Fecha + "\n");
+                bool agregue = false;
                 DateTime fecha = FormatoFecha("Ingrese una fecha: ");
-                while (!Comun.ValidoFecha(fecha))
+                while (!agregue)
                 {
-                    Console.Clear();
-                    Console.WriteLine("Fecha antigua.");
-                    Console.Write("Ingrese una fecha nuevamente: ");
-                    email = Console.ReadLine().Trim();
+                    if (!Comun.ValidoFecha(fecha))
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Fecha antigua.");
+                        fecha = FormatoFecha("Ingrese una fecha nuevamente: ");
+                    }
+                    else if (emp.BuscarFechaEvento(fecha))
+                    {
+                        Console.Clear();
+                        Console.WriteLine("En esa fecha ya existe un evento.");
+                        fecha = FormatoFecha("Ingrese una fecha nuevamente: ");
+                    }
+                    else agregue = true;
                 }
+
             }
         }
 
@@ -205,14 +216,29 @@ namespace EmpresaEvento
             Console.Clear();
             string pass = "";
             string email = "";
+            bool agregue = false;
             Console.Write("Ingrese un email: ");
             email = Console.ReadLine().Trim();
-            while (!Usuario.ValidoEmail(email))
+            while (!agregue)
             {
-                Console.Clear();
-                Console.WriteLine("El email no es correcto.");
-                Console.Write("Ingrese un email nuevamente: ");
-                email = Console.ReadLine().Trim();
+                if (emp.BuscarUsuario(email) == null)
+                {
+                    while (!Usuario.ValidoEmail(email))
+                    {
+                        Console.Clear();
+                        Console.WriteLine("El email no es correcto.");
+                        Console.Write("Ingrese un email nuevamente: ");
+                        email = Console.ReadLine().Trim();
+                    }
+                    agregue = true;
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("El email ya existe.");
+                    Console.Write("Ingrese un email nuevamente: ");
+                    email = Console.ReadLine().Trim();
+                }
             }
             Console.Clear();
             Console.Write("Ingrese una nueva contraseña para este email: ");
@@ -239,14 +265,29 @@ namespace EmpresaEvento
             string direccion = "";
             string telefono = "";
             string email = "";
+            bool agregue = false;
             Console.Write("Ingrese un email: ");
             email = Console.ReadLine().Trim();
-            while (!Usuario.ValidoEmail(email))
+            while (!agregue)
             {
-                Console.Clear();
-                Console.WriteLine("El email no es correcto.");
-                Console.Write("Ingrese un email nuevamente: ");
-                email = Console.ReadLine().Trim();
+                if (emp.BuscarUsuario(email) == null)
+                {
+                    while (!Usuario.ValidoEmail(email))
+                    {
+                        Console.Clear();
+                        Console.WriteLine("El email no es correcto.");
+                        Console.Write("Ingrese un email nuevamente: ");
+                        email = Console.ReadLine().Trim();
+                    }
+                    agregue = true;
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("El email ya existe.");
+                    Console.Write("Ingrese un email nuevamente: ");
+                    email = Console.ReadLine().Trim();
+                }
             }
             Console.Clear();
             Console.Write("Ingrese una nueva contraseña para este email: ");
@@ -304,6 +345,7 @@ namespace EmpresaEvento
             }
             return fecha;
         }
+
         public static string Salir()
         {
             Console.Write("¿Desea salir?\n0 - Salir\nCualquier tecla para continuar: ");

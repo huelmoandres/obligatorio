@@ -150,7 +150,8 @@ namespace EmpresaEventoDominio
             ErrorTurno,
             ErrorVacio,
             ErrorDuracion,
-            ErrorAsistentes
+            ErrorAsistentes,
+            FechaRepetida
         }
         #endregion
 
