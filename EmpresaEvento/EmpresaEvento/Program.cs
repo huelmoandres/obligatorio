@@ -177,6 +177,18 @@ namespace EmpresaEvento
                     }
                     else agregue = true;
                 }
+                Console.Write("\nIngrese un turno: " +
+                                  "\n1- Mañana" +
+                                  "\n2- Tarde" +
+                                  "\n3- Noche");                
+                byte turno = FormatoByte("\nIngrese la opción correcta: ");
+                while(turno != 1 || turno != 2 || turno != 3)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Opción incorrecta.");
+                    turno = FormatoByte("Ingrese la opción correcta: ");
+                }
+              
 
             }
         }
@@ -344,6 +356,19 @@ namespace EmpresaEvento
                 strFecha = Console.ReadLine();
             }
             return fecha;
+        }
+
+        public static byte FormatoByte(string texto)
+        {
+            byte num = 0;
+            Console.WriteLine(texto);
+            string strFecha = Console.ReadLine();
+            while (!Byte.TryParse(strFecha, out num))
+            {
+                Console.Write("Selección no válida. Ingrese una nuevamente: ");
+                strFecha = Console.ReadLine();
+            }
+            return num;
         }
 
         public static string Salir()
