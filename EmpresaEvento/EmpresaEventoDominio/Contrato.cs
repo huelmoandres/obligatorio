@@ -48,6 +48,18 @@ namespace EmpresaEventoDominio
             this.CantPersonas = cantPersonas;
         }
         #endregion
+
+        #region Validaciones
+        public static bool ValidoCantPersonasServicio(int p)
+        {
+            return p > 0;
+        }
+
+        public static bool ValidoServicioVacio(Servicio s)
+        {
+            return s != null;
+        }
+        #endregion
     }
 }
 

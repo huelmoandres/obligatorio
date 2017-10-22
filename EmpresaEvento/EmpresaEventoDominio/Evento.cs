@@ -16,7 +16,7 @@ namespace EmpresaEventoDominio
         private string descripcion;
         private string cliente;
         private int cantAsistentes;
-        private List<Contrato> contratos;
+        private List<Contrato> contratos = new List<Contrato>();
         #endregion
 
         #region Propiedades
@@ -86,6 +86,10 @@ namespace EmpresaEventoDominio
             {
                 return contratos;
             }
+            set
+            {
+                contratos = value;
+            }
         }
 
         public int CantAsistentes
@@ -103,15 +107,16 @@ namespace EmpresaEventoDominio
         #endregion
 
         #region Constructor
-        public Evento(DateTime fecha, byte turno, string descripcion, string cliente, int cantAsistentes)
+        public Evento(DateTime fecha, byte turno, string descripcion, string cliente, int cantAsistentes, Contrato c)
         {
             this.Fecha = fecha;
             this.Turno = turno;
             this.Descripcion = descripcion;
             this.Cliente = cliente;
-            this.cantAsistentes = cantAsistentes;
+            this.CantAsistentes = cantAsistentes;
             this.id = contador + 1;
             contador++;
+            contratos.Add(c);
         }
         #endregion
 
@@ -119,13 +124,9 @@ namespace EmpresaEventoDominio
 
         public static bool ValidoFecha(DateTime fecha)
         {
-            bool resultado = false;
-            if (fecha >= DateTime.Today)
-            {
-                resultado = true;
-            }
-            return resultado;
+            return fecha >= DateTime.Today;
         }
+
         public static bool ValidTurno(byte turno)
         {
             bool resultado = false;
@@ -135,15 +136,12 @@ namespace EmpresaEventoDominio
             }
             return resultado;
         }
+
         public static bool ValidoVacio(string campo)
         {
-            bool resultado = false;
-            if (campo != "")
-            {
-                resultado = true;
-            }
-            return resultado;
+            return campo != "";
         }
+
         public enum ErroresAlta{
             Ok,
             ErrorFecha,
@@ -152,13 +150,8 @@ namespace EmpresaEventoDominio
             ErrorDuracion,
             ErrorAsistentes,
             FechaRepetida,
-            InsuficientesPersonas
+            ServicioPersonas
         }
         #endregion
-
-        public void AltaContrato(Contrato c)
-        {
-            contratos.Add(c);
-        }
     }
 }

@@ -37,7 +37,7 @@ namespace EmpresaEventoDominio
         #endregion
 
         #region Constructor
-        public Comun(DateTime fecha, byte turno, string descripcion, string cliente, int cantAsistentes, double duracion) : base(fecha, turno, descripcion, cliente, cantAsistentes)
+        public Comun(DateTime fecha, byte turno, string descripcion, string cliente, int cantAsistentes, Contrato contrato, double duracion) : base(fecha, turno, descripcion, cliente, cantAsistentes, contrato)
         {
             this.Duracion = duracion;
         }
@@ -53,6 +53,7 @@ namespace EmpresaEventoDominio
             }
             return resultado;
         }
+
         public static bool ControlAsistentes(int asistentes)
         {
             bool resultado = false;
@@ -63,5 +64,10 @@ namespace EmpresaEventoDominio
             return resultado;
         }
         #endregion
+
+        public override string ToString()
+        {
+            return Fecha + " " + Turno + " " + Descripcion + " " + Cliente + " " + CantAsistentes + " " + Duracion;
+        }
     }
 }

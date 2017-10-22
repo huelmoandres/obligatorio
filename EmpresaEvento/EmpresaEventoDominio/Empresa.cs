@@ -70,6 +70,7 @@ namespace EmpresaEventoDominio
             }
             return usu;
         }
+
         public bool BuscarFechaEvento(DateTime fecha)
         {
             bool esta = false;
@@ -92,6 +93,18 @@ namespace EmpresaEventoDominio
                 i++;
             }
             return eve;
+        }
+
+        public Servicio BuscarServicio(string nom)
+        {
+            Servicio s = null;
+            int i = 0;
+            while (i < servicios.Count && s == null)
+            {
+                if (servicios[i].Nombre == nom) s = servicios[i];
+                i++;
+            }
+            return s;
         }
         #endregion
 
@@ -118,6 +131,7 @@ namespace EmpresaEventoDominio
 
             return resultado;
         }
+
         public Organizador.ErroresAlta AltaOrganizador(string email, string pass, string nombre, string tel, string dir)
         {
             Organizador.ErroresAlta resultado = Usuario.ErroresAlta.Ok;
@@ -153,6 +167,7 @@ namespace EmpresaEventoDominio
 
             return resultado;
         }
+
         public Comun.ErroresAlta AltaComun(DateTime fec, byte tur, string des, string cli, int cAsis, double dur, Servicio s, int personasServicio)
         {
             Comun.ErroresAlta resultado = Comun.ErroresAlta.Ok;
@@ -180,18 +195,35 @@ namespace EmpresaEventoDominio
             {
                 resultado = Comun.ErroresAlta.FechaRepetida;
             }
-            else if (personasServicio > cAsis)
+            else if (!Contrato.ValidoCantPersonasServicio(personasServicio) || personasServicio > cAsis)
             {
-                resultado = Comun.ErroresAlta.InsuficientesPersonas;
+                resultado = Comun.ErroresAlta.ServicioPersonas;
             }
             else
             {
-                Comun c = new Comun(fec, tur, des, cli, cAsis, dur);
-                Contrato con = new Contrato(s, 5);
-                c.AltaContrato(con);
+                Contrato con = new Contrato(s, personasServicio);
+                Comun c = new Comun(fec, tur, des, cli, cAsis, con, dur);
                 eventos.Add(c);
             }
+            return resultado;
+        }
 
+        public bool AltaContrato(Evento e, Servicio s, int personas)
+        {
+            bool resultado = false;
+            e = BuscarEvento(e.Id);
+            if (e != null)
+            {
+                if (Contrato.ValidoCantPersonasServicio(personas) && personas <= e.CantAsistentes)
+                {
+                    s = BuscarServicio(s.Nombre);
+                    if(s != null)
+                    {
+                        Contrato c = new Contrato(s, personas);
+                        e.Contratos.Add(c);
+                    }
+                }
+            }
             return resultado;
         }
         #endregion

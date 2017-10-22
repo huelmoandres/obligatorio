@@ -23,7 +23,7 @@ namespace EmpresaEventoDominio
         #endregion
 
         #region Constructor
-        public Premium(DateTime fecha, byte turno, string descripcion, string cliente, int cantAsistentes) : base(fecha, turno, descripcion, cliente, cantAsistentes)
+        public Premium(DateTime fecha, byte turno, string descripcion, string cliente, int cantAsistentes, Contrato contratos) : base(fecha, turno, descripcion, cliente, cantAsistentes, contratos)
         {
         }
         #endregion

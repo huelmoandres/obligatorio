@@ -232,14 +232,7 @@ namespace EmpresaEvento
                         Console.WriteLine("Error. Recuerde que la cantidad de personas no pueden ser más de 10 en eventos comunes.");
                         cantidadPersonas = FormatoEntero("Ingrese cantidad de nuevo: ");
                     }
-                    Console.Clear();
-                    double duracion = FormatoDecimal("\nIngrese la duración del evento: ");
-                    while (!Comun.ValidoDuracion(duracion))
-                    {
-                        Console.Clear();
-                        Console.WriteLine("Error. Recuerde que la duración no puede ser más de 4 horas en eventos comunes.");
-                        duracion = FormatoDecimal("Ingrese duración de nuevo: ");
-                    }
+                    AltaEventoComun(fecha, turno, des, cliente, cantidadPersonas);
                 }
                 else if (tipo == "2") // Premium
                 {
@@ -252,6 +245,39 @@ namespace EmpresaEvento
                 }
             }
         }
+
+        private static void AltaEventoComun(DateTime fecha, byte turno, string des, string cliente, int cantidadPersonas)
+        {
+            Console.Clear();
+            double duracion = FormatoDecimal("\nIngrese la duración del evento: ");
+            while (!Comun.ValidoDuracion(duracion))
+            {
+                Console.Clear();
+                Console.WriteLine("Error. Recuerde que la duración no puede ser más de 4 horas en eventos comunes.");
+                duracion = FormatoDecimal("Ingrese duración de nuevo: ");
+            }
+            Console.WriteLine("\nIngrese un servicio por su nombre: ");
+            ListarServicios();
+            Console.Write("Ingrese opción: ");
+            string nombreS = Console.ReadLine().Trim();
+            Servicio s = emp.BuscarServicio(nombreS);
+            while(s == null)
+            {
+                Console.Clear();
+                ListarServicios();
+                Console.Write("Nombre incorrecto. Vuelva a ingresarlo");
+                nombreS = Console.ReadLine().Trim();
+                s = emp.BuscarServicio(nombreS);
+            }
+            int personasServicio = FormatoEntero("\nIngrese la cantidad de personas que recibirán ese servicio: ");
+            while(personasServicio > cantidadPersonas || !Contrato.ValidoCantPersonasServicio(personasServicio))
+            {
+                Console.Clear();
+                personasServicio = FormatoEntero("Error. Vuelva a ingresar la cantidad de personas: ");
+            }
+            emp.AltaComun(fecha, turno, des, cliente, cantidadPersonas, duracion, s, personasServicio);
+        }
+
         private static void ListarUsuarios()
         {
             Console.Clear();
