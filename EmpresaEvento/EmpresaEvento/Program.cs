@@ -70,6 +70,118 @@ namespace EmpresaEvento
             }
         }
 
+        private static void UsuarioLogeado()
+        {
+            Console.Clear();
+            string opcion = "";
+            while (opcion != "0")
+            {
+                Console.WriteLine("\n----- Menú -----");
+                Console.WriteLine("¡Bienvenido " + logeado.Email + "!");
+                Console.WriteLine("1 - Listar todos los usuarios");
+                Console.WriteLine("2 - Listar catálogo de servicios");
+                Console.WriteLine("3 - Registrar un evento");
+                Console.WriteLine("4 - Eventos de un organizador");
+                Console.WriteLine("5 - Agregar más servicios a un evento");
+                Console.WriteLine("0 - Salir");
+                Console.Write("Seleccione una opción: ");
+                opcion = Console.ReadLine().Trim();
+                switch (opcion)
+                {
+                    case "1":
+                        ListarUsuarios();
+                        break;
+                    case "2":
+                        ListarServicios();
+                        break;
+                    case "3":
+                        if (logeado is Organizador)
+                        {
+                            RegistroEvento();
+                        } else
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Acceso denegado. Debe ser organizador.");
+                        }
+                        break;
+                    case "4":
+                        EventosOrganizador();
+                        break;
+                    case "5":
+                        if (logeado is Organizador)
+                        {
+                            AgregarServicioEvento();
+                        }
+                        else
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Acceso denegado. Debe ser organizador.");
+                        }
+                        break;
+                    case "0":
+                        break;
+                    default:
+                        Console.Clear();
+                        Console.WriteLine("La opción ingresada no es correcta.\n");
+                        break;
+                }
+            }
+        }
+
+        private static void EventosOrganizador()
+        {
+            Console.Clear();
+            Console.Write("Ingrese mail del organizador: ");
+            string email = Console.ReadLine();
+            Usuario u = emp.BuscarUsuario(email);
+            if (u != null && u is Organizador)
+            {
+                Organizador org = u as Organizador;
+                foreach(Evento e in org.Eventos)
+                {
+                    Console.WriteLine(e.ToString());
+                }
+                Console.WriteLine("\nMonto total de eventos: $" + org.CostoTotalEventos());
+            }
+            else
+            {
+                Console.Write("No existe un organizdor con ese email.");
+            }
+        }
+
+        #region Listados
+        private static void ListarUsuarios()
+        {
+            Console.Clear();
+            Console.WriteLine("----- Listado de Usuarios -----");
+            foreach (Usuario u in emp.Usuarios)
+            {
+                Console.WriteLine(u.ToString());
+                if (u.Rol == 0)
+                {
+                    Console.WriteLine("Rol: Admin\n");
+                }
+                else if(u.Rol == 1)
+                {
+                    Console.WriteLine("Rol: Organizador\n");
+                }
+            }
+            Console.WriteLine("-------------------------------");
+        }
+
+        private static void ListarServicios()
+        {
+            Console.Clear();
+            Console.WriteLine("----- Listado de Servicios -----");
+            foreach (Servicio s in emp.Servicios)
+            {
+                Console.WriteLine(s.ToString());
+            }
+            Console.WriteLine("-------------------------------");
+        }
+        #endregion
+
+        #region Altas
         private static void Registro()
         {
             Console.Clear();
@@ -101,52 +213,6 @@ namespace EmpresaEvento
             }
         }
 
-        private static void UsuarioLogeado()
-        {
-            Console.Clear();
-            string opcion = "";
-            while (opcion != "0")
-            {
-                Console.WriteLine("\n----- Menú -----");
-                Console.WriteLine("¡Bienvenido " + logeado.Email + "!");
-                Console.WriteLine("1 - Listar todos los usuarios");
-                Console.WriteLine("2 - Listar catálogo de servicios");
-                Console.WriteLine("3 - Registrar un evento");
-                Console.WriteLine("4 - Eventos de un organizador");
-                Console.WriteLine("0 - Salir");
-                Console.Write("Seleccione una opción: ");
-                opcion = Console.ReadLine().Trim();
-                switch (opcion)
-                {
-                    case "1":
-                        ListarUsuarios();
-                        break;
-                    case "2":
-                        ListarServicios();
-                        break;
-                    case "3":
-                        if (logeado is Organizador)
-                        {
-                            RegistroEvento();
-                        } else
-                        {
-                            Console.Clear();
-                            Console.WriteLine("Acceso denegado. Debe ser organizador.");
-                        }
-                        break;
-                    case "4":
-                        break;
-                    case "0":
-                        break;
-                    default:
-                        Console.Clear();
-                        Console.WriteLine("La opción ingresada no es correcta.\n");
-                        break;
-                }
-            }
-
-        }
-
         private static void RegistroEvento()
         {
             if (logeado is Organizador)
@@ -159,6 +225,10 @@ namespace EmpresaEvento
                                   "\nTeléfono: " + org.Telefono +
                                   "\nDirección: " + org.Direccion +
                                   "\nFecha de registro: " + org.Fecha + "\n");
+                string cliente = "", des = "", tipo = "";
+                byte turno = 0;
+                double duracion = 0;
+                int cantidadPersonas = 0;
                 bool agregue = false;
                 DateTime fecha = FormatoFecha("Ingrese una fecha: ");
                 while (!agregue)
@@ -169,7 +239,7 @@ namespace EmpresaEvento
                         Console.WriteLine("Fecha antigua.");
                         fecha = FormatoFecha("Ingrese una fecha nuevamente: ");
                     }
-                    else if (emp.BuscarFechaEvento(fecha))
+                    else if (emp.BuscarFechaEvento(fecha) != null)
                     {
                         Console.Clear();
                         Console.WriteLine("En esa fecha ya existe un evento.");
@@ -181,7 +251,7 @@ namespace EmpresaEvento
                                   "\n1- Mañana" +
                                   "\n2- Tarde" +
                                   "\n3- Noche");
-                byte turno = FormatoByte("\nIngrese la opción correcta: ");
+                turno = FormatoByte("\nIngrese la opción correcta: ");
                 while (turno != 1 && turno != 2 && turno != 3)
                 {
                     Console.Clear();
@@ -193,7 +263,7 @@ namespace EmpresaEvento
                     turno = FormatoByte("Ingrese la opción correcta: ");
                 }
                 Console.Write("\nIngrese una descripción: ");
-                string des = Console.ReadLine();
+                des = Console.ReadLine();
                 while (!Evento.ValidoVacio(des))
                 {
                     Console.Clear();
@@ -201,7 +271,7 @@ namespace EmpresaEvento
                     des = Console.ReadLine().Trim();
                 }
                 Console.Write("\nIngrese el nombre del cliente: ");
-                string cliente = Console.ReadLine();
+                cliente = Console.ReadLine();
                 while (!Evento.ValidoVacio(cliente))
                 {
                     Console.Clear();
@@ -212,7 +282,7 @@ namespace EmpresaEvento
                                   "\n1- Común" +
                                   "\n2- Premium");
                 Console.Write("Ingrese la opción correcta: ");
-                string tipo = Console.ReadLine().Trim();
+                tipo = Console.ReadLine().Trim();
                 while (tipo != "1" && tipo != "2")
                 {
                     Console.Clear();
@@ -223,7 +293,7 @@ namespace EmpresaEvento
                     Console.Write("Ingrese la opción correcta: ");
                     tipo = Console.ReadLine().Trim();
                 }
-                int cantidadPersonas = FormatoEntero("\nIngrese cantidad de peronas que van a asistir: ");
+                cantidadPersonas = FormatoEntero("\nIngrese cantidad de peronas que van a asistir: ");
                 if (tipo == "1") //Común
                 {
                     while (!Comun.ControlAsistentes(cantidadPersonas))
@@ -232,80 +302,52 @@ namespace EmpresaEvento
                         Console.WriteLine("Error. Recuerde que la cantidad de personas no pueden ser más de 10 en eventos comunes.");
                         cantidadPersonas = FormatoEntero("Ingrese cantidad de nuevo: ");
                     }
-                    AltaEventoComun(fecha, turno, des, cliente, cantidadPersonas);
+                    duracion = FormatoDecimal("\nIngrese la duración del evento: ");
+                    while (!Comun.ValidoDuracion(duracion))
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Error. Recuerde que la duración no puede ser más de 4 horas en eventos comunes.");
+                        duracion = FormatoDecimal("Ingrese duración de nuevo: ");
+                    }
                 }
                 else if (tipo == "2") // Premium
                 {
-                    while (cantidadPersonas < 0 && cantidadPersonas > 100)
+                    while (!Premium.ControlAsistentes(cantidadPersonas))
                     {
                         Console.Clear();
                         Console.WriteLine("Error. Recuerde que la cantidad de personas no pueden ser más de 100 en eventos Premium.");
                         cantidadPersonas = FormatoEntero("Ingrese cantidad de nuevo: ");
                     }
                 }
-            }
-        }
-
-        private static void AltaEventoComun(DateTime fecha, byte turno, string des, string cliente, int cantidadPersonas)
-        {
-            Console.Clear();
-            double duracion = FormatoDecimal("\nIngrese la duración del evento: ");
-            while (!Comun.ValidoDuracion(duracion))
-            {
-                Console.Clear();
-                Console.WriteLine("Error. Recuerde que la duración no puede ser más de 4 horas en eventos comunes.");
-                duracion = FormatoDecimal("Ingrese duración de nuevo: ");
-            }
-            Console.WriteLine("\nIngrese un servicio por su nombre: ");
-            ListarServicios();
-            Console.Write("Ingrese opción: ");
-            string nombreS = Console.ReadLine().Trim();
-            Servicio s = emp.BuscarServicio(nombreS);
-            while(s == null)
-            {
                 Console.Clear();
                 ListarServicios();
-                Console.Write("Nombre incorrecto. Vuelva a ingresarlo");
-                nombreS = Console.ReadLine().Trim();
-                s = emp.BuscarServicio(nombreS);
-            }
-            int personasServicio = FormatoEntero("\nIngrese la cantidad de personas que recibirán ese servicio: ");
-            while(personasServicio > cantidadPersonas || !Contrato.ValidoCantPersonasServicio(personasServicio))
-            {
-                Console.Clear();
-                personasServicio = FormatoEntero("Error. Vuelva a ingresar la cantidad de personas: ");
-            }
-            emp.AltaComun(fecha, turno, des, cliente, cantidadPersonas, duracion, s, personasServicio);
-        }
-
-        private static void ListarUsuarios()
-        {
-            Console.Clear();
-            Console.WriteLine("----- Listado de Usuarios -----");
-            foreach (Usuario u in emp.Usuarios)
-            {
-                Console.WriteLine(u.ToString());
-                if (u.Rol == 0)
+                Console.Write("\nIngrese un servicio por su nombre: ");
+                string nombreS = Console.ReadLine().Trim();
+                Servicio s = emp.BuscarServicio(nombreS);
+                while (s == null)
                 {
-                    Console.WriteLine("Rol: Admin\n");
+                    Console.Clear();
+                    ListarServicios();
+                    Console.Write("Nombre incorrecto. Vuelva a ingresarlo");
+                    nombreS = Console.ReadLine().Trim();
+                    s = emp.BuscarServicio(nombreS);
                 }
-                else if(u.Rol == 1)
+                int personasServicio = FormatoEntero("\nIngrese la cantidad de personas que recibirán ese servicio: ");
+                while (personasServicio > cantidadPersonas || !Contrato.ValidoCantPersonasServicio(personasServicio))
                 {
-                    Console.WriteLine("Rol: Organizador\n");
+                    Console.Clear();
+                    personasServicio = FormatoEntero("Error. Vuelva a ingresar la cantidad de personas: ");
                 }
+                if(tipo == "1")
+                {
+                    emp.AltaComun(fecha, turno, des, cliente, cantidadPersonas, duracion, s, personasServicio, logeado.Email);
+                }
+                else if(tipo == "2")
+                {
+                    emp.AltaPremium(fecha, turno, des, cliente, cantidadPersonas, s, personasServicio, logeado.Email);
+                }
+                DetalleEvento(fecha);
             }
-            Console.WriteLine("-------------------------------");
-        }
-
-        private static void ListarServicios()
-        {
-            Console.Clear();
-            Console.WriteLine("----- Listado de Servicios -----");
-            foreach (Servicio s in emp.Servicios)
-            {
-                Console.WriteLine(s.ToString());
-            }
-            Console.WriteLine("-------------------------------");
         }
 
         public static void AltaAdmin()
@@ -429,7 +471,73 @@ namespace EmpresaEvento
             logeado = emp.BuscarUsuario(email);
             UsuarioLogeado();
         }
+        #endregion
 
+        #region Agregaciones
+        private static void AgregarServicioEvento()
+        {
+            if (emp.Eventos != null)
+            {
+                Console.Clear();
+                Console.WriteLine("\nIngrese un evento por su código: ");
+                ListarServicios();
+                Console.Write("Ingrese opción: ");
+                int codigo = FormatoEntero("Ingrese el códgido del evento: ");
+                Evento e = emp.BuscarEvento(codigo);
+                while (e == null)
+                {
+                    Console.Clear();
+                    ListarServicios();
+                    codigo = FormatoEntero("Código incorrecto. Vuelva a ingresarlo: ");
+                    e = emp.BuscarEvento(codigo);
+                }
+                Console.WriteLine("\nIngrese un servicio por su nombre: ");
+                ListarServicios();
+                Console.Write("Ingrese opción: ");
+                string nombreS = Console.ReadLine().Trim();
+                Servicio s = emp.BuscarServicio(nombreS);
+                while (s == null)
+                {
+                    Console.Clear();
+                    ListarServicios();
+                    Console.Write("Nombre incorrecto. Vuelva a ingresarlo");
+                    nombreS = Console.ReadLine().Trim();
+                    s = emp.BuscarServicio(nombreS);
+                }
+                if(!e.BuscarServicioEvento(s.Nombre))
+                {
+                    int personasServicio = FormatoEntero("\nIngrese la cantidad de personas que recibirán ese servicio: ");
+                    while (personasServicio > e.CantAsistentes || !Contrato.ValidoCantPersonasServicio(personasServicio))
+                    {
+                        Console.Clear();
+                        personasServicio = FormatoEntero("Error. Vuelva a ingresar la cantidad de personas: ");
+                    }
+                    emp.AgregarServicioEvento(e, s, personasServicio);
+                } else
+                {
+                    Console.WriteLine("Este evento ya cuenta con este servicio.");
+                }
+                
+            } else
+            {
+                Console.Clear();
+                Console.Write("No hay eventos creados");
+            }
+        }
+        #endregion
+
+        #region Detalles
+        public static void DetalleEvento(DateTime fecha)
+        {
+            Console.Clear();
+            Evento e = emp.BuscarFechaEvento(fecha);
+            Console.WriteLine("\n----- Detalle del Evento -----");
+            Console.WriteLine(e.ToString());
+            Console.WriteLine("-------------------------------");
+        }
+        #endregion
+
+        #region Formatos
         public static DateTime FormatoFecha(string texto)
         {
             DateTime fecha = new DateTime();
@@ -481,12 +589,16 @@ namespace EmpresaEvento
             }
             return num;
         }
+        #endregion
+
+        #region Salir
         public static string Salir()
         {
             Console.Write("¿Desea salir?\n0 - Salir\nCualquier tecla para continuar: ");
             string opcion = Console.ReadLine().Trim();
             return opcion;
         }
+        #endregion
     }
 }
 

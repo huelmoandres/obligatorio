@@ -9,7 +9,7 @@ namespace EmpresaEventoDominio
     public class Premium : Evento
     {
         #region Atributos
-        private static double aumento;
+        private static double aumento = 400;
         #endregion
 
         #region Propiedades
@@ -17,7 +17,11 @@ namespace EmpresaEventoDominio
         {
             get
             {
-                return aumento;
+                return Premium.aumento;
+            }
+            set
+            {
+                Premium.aumento = value;
             }
         }
         #endregion
@@ -27,6 +31,17 @@ namespace EmpresaEventoDominio
         {
         }
         #endregion
+
+        public override double CalcularTotal()
+        {
+            double resultado = 0;
+            foreach (Contrato c in Contratos)
+            {
+                resultado += c.SubTotal();
+            }
+            resultado += aumento;
+            return resultado;
+        }
 
         #region Validaciones
         public static bool ControlAsistentes(int asistentes)
@@ -39,5 +54,10 @@ namespace EmpresaEventoDominio
             return resultado;
         }
         #endregion
+
+        public override string ToString()
+        {
+            return base.ToString();
+        }
     }
 }

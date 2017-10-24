@@ -11,6 +11,7 @@ namespace EmpresaEventoDominio
         #region Atributos
         private Servicio servicio;
         private int cantPersonas;
+        private double precioPersonaEstablecido;
         #endregion
 
         #region Propiedades
@@ -46,8 +47,14 @@ namespace EmpresaEventoDominio
         {
             this.Servicio = servicio;
             this.CantPersonas = cantPersonas;
+            this.precioPersonaEstablecido = servicio.PrecioPersona;
         }
         #endregion
+
+        public double SubTotal()
+        {
+            return precioPersonaEstablecido * cantPersonas;
+        }
 
         #region Validaciones
         public static bool ValidoCantPersonasServicio(int p)
@@ -58,6 +65,15 @@ namespace EmpresaEventoDominio
         public static bool ValidoServicioVacio(Servicio s)
         {
             return s != null;
+        }
+
+        public enum ErroresAlta
+        {
+            Ok,
+            ErrorPersonas,
+            ErrorServicio,
+            ErrorServicioExiste,
+            ErrorEvento
         }
         #endregion
     }

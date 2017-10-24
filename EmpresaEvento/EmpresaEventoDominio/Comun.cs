@@ -20,7 +20,6 @@ namespace EmpresaEventoDominio
             {
                 return duracion;
             }
-
             set
             {
                 duracion = value;
@@ -31,7 +30,11 @@ namespace EmpresaEventoDominio
         {
             get
             {
-                return limpieza;
+                return Comun.limpieza;
+            }
+            set
+            {
+                Comun.limpieza = value;
             }
         }
         #endregion
@@ -47,7 +50,7 @@ namespace EmpresaEventoDominio
         public static bool ValidoDuracion(double dur)
         {
             bool resultado = false;
-            if(dur > 0 && dur < 4)
+            if(dur > 0 && dur <= 4)
             {
                 resultado = true;
             }
@@ -65,9 +68,21 @@ namespace EmpresaEventoDominio
         }
         #endregion
 
+        public override double CalcularTotal()
+        {
+            double resultado = 0;
+            foreach(Contrato c in Contratos)
+            {
+                resultado += c.SubTotal();
+            }
+            resultado += limpieza;
+            return resultado;
+        }
+
         public override string ToString()
         {
-            return Fecha + " " + Turno + " " + Descripcion + " " + Cliente + " " + CantAsistentes + " " + Duracion;
+            return base.ToString() + "\nDuración: " + duracion + " hs" +
+                                     "\nCosto total del evento: $" + CalcularTotal();
         }
     }
 }

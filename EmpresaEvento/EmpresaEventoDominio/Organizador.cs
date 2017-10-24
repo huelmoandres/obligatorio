@@ -13,6 +13,7 @@ namespace EmpresaEventoDominio
         private string telefono;
         private string direccion;
         private DateTime fecha;
+        private List<Evento> eventos = new List<Evento>();
         #endregion
 
         #region Propiedades
@@ -59,6 +60,14 @@ namespace EmpresaEventoDominio
                 return fecha;
             }
         }
+
+        public List<Evento> Eventos
+        {
+            get
+            {
+                return eventos;
+            }
+        }
         #endregion
 
         #region Constructor
@@ -70,6 +79,21 @@ namespace EmpresaEventoDominio
             this.fecha = DateTime.Today;
         }
         #endregion
+
+        public void AgregarEvento(Evento e)
+        {
+            eventos.Add(e);
+        }
+
+        public double CostoTotalEventos()
+        {
+            double resultado = 0;
+            foreach (Evento e in eventos)
+            {
+                resultado += e.CalcularTotal();
+            }
+            return resultado;
+        }
 
         public override string ToString()
         {

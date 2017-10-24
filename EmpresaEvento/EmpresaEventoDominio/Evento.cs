@@ -127,7 +127,7 @@ namespace EmpresaEventoDominio
             return fecha >= DateTime.Today;
         }
 
-        public static bool ValidTurno(byte turno)
+        public static bool ValidoTurno(byte turno)
         {
             bool resultado = false;
             if (turno >= 1 && turno <= 3)
@@ -150,8 +150,55 @@ namespace EmpresaEventoDominio
             ErrorDuracion,
             ErrorAsistentes,
             FechaRepetida,
-            ServicioPersonas
+            ServicioPersonas,
+            ServicioVacio,
+            ErrorUsuario
         }
         #endregion
+
+        public bool BuscarServicioEvento(string nombre)
+        {
+            bool existe = false;
+            int i = 0;
+            while (i < contratos.Count && !existe)
+            {
+                if (contratos[i].Servicio.Nombre == nombre) existe = true;
+                i++;
+            }
+            return existe;
+        }
+
+        public abstract double CalcularTotal();
+
+        public override string ToString()
+        {
+            string resultado = "Código evento: " + id +
+                   "\nNombre de cliente: " + cliente +
+                   "\nDescripción: " + descripcion +
+                   "\nFecha: " + fecha;
+            if(turno == 1)
+            {
+                resultado += "\nTurno: mañana";
+            }
+            else if(turno == 2)
+            {
+                resultado += "\nTurno: tarde";
+            }
+            else
+            {
+                resultado += "\nTurno: noche";
+            }
+            resultado += "\nCantidad de asistentes: " + cantAsistentes;
+            resultado += "\n----- Servicios del evento -----";
+            foreach(Contrato c in contratos)
+            {
+                resultado += "\nServicio: " + c.Servicio.Nombre;
+                resultado += "\nPrecio por persona: $" + c.Servicio.PrecioPersona;
+                resultado += "\nCantidad de personas para el servicio: " + c.CantPersonas;
+                resultado += "\nTotal del servicio: $" + c.SubTotal();
+                resultado += "\n--------------------------------------------------------";
+            }
+            return resultado;
+        }
     }
 }

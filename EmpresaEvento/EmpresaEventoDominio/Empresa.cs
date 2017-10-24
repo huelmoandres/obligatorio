@@ -71,16 +71,16 @@ namespace EmpresaEventoDominio
             return usu;
         }
 
-        public bool BuscarFechaEvento(DateTime fecha)
+        public Evento BuscarFechaEvento(DateTime fecha)
         {
-            bool esta = false;
+            Evento eve = null;
             int i = 0;
-            while (i < eventos.Count && !esta)
+            while (i < eventos.Count && eve == null)
             {
-                if (eventos[i].Fecha == fecha) esta = true;
+                if (eventos[i].Fecha == fecha) eve = eventos[i];
                 i++;
             }
-            return esta;
+            return eve;
         }
 
         public Evento BuscarEvento(int id)
@@ -168,14 +168,14 @@ namespace EmpresaEventoDominio
             return resultado;
         }
 
-        public Comun.ErroresAlta AltaComun(DateTime fec, byte tur, string des, string cli, int cAsis, double dur, Servicio s, int personasServicio)
+        public Comun.ErroresAlta AltaComun(DateTime fec, byte tur, string des, string cli, int cAsis, double dur, Servicio s, int personasServicio, string emailUsuario)
         {
             Comun.ErroresAlta resultado = Comun.ErroresAlta.Ok;
             if (!Comun.ValidoFecha(fec))
             {
                 resultado = Comun.ErroresAlta.ErrorFecha;
             }
-            else if (!Comun.ValidTurno(tur))
+            else if (!Comun.ValidoTurno(tur))
             {
                 resultado = Comun.ErroresAlta.ErrorTurno;
             }
@@ -191,7 +191,7 @@ namespace EmpresaEventoDominio
             {
                 resultado = Comun.ErroresAlta.ErrorAsistentes;
             }
-            else if(BuscarFechaEvento(fec))
+            else if(BuscarFechaEvento(fec) != null)
             {
                 resultado = Comun.ErroresAlta.FechaRepetida;
             }
@@ -199,30 +199,101 @@ namespace EmpresaEventoDominio
             {
                 resultado = Comun.ErroresAlta.ServicioPersonas;
             }
+            else if(s == null)
+            {
+                resultado = Comun.ErroresAlta.ServicioVacio;
+            }
+            else if(BuscarUsuario(emailUsuario) == null || BuscarUsuario(emailUsuario).Rol != 1)
+            {
+                resultado = Comun.ErroresAlta.ErrorUsuario;
+            }
             else
             {
                 Contrato con = new Contrato(s, personasServicio);
                 Comun c = new Comun(fec, tur, des, cli, cAsis, con, dur);
                 eventos.Add(c);
+                Usuario u = BuscarUsuario(emailUsuario);
+                Organizador o = u as Organizador;
+                o.AgregarEvento(c);
             }
             return resultado;
         }
 
-        public bool AltaContrato(Evento e, Servicio s, int personas)
+        public Premium.ErroresAlta AltaPremium(DateTime fec, byte tur, string des, string cli, int cAsis, Servicio s, int personasServicio, string emailUsuario)
         {
-            bool resultado = false;
-            e = BuscarEvento(e.Id);
-            if (e != null)
+            Premium.ErroresAlta resultado = Premium.ErroresAlta.Ok;
+            if (!Premium.ValidoFecha(fec))
             {
-                if (Contrato.ValidoCantPersonasServicio(personas) && personas <= e.CantAsistentes)
-                {
-                    s = BuscarServicio(s.Nombre);
-                    if(s != null)
-                    {
-                        Contrato c = new Contrato(s, personas);
-                        e.Contratos.Add(c);
-                    }
-                }
+                resultado = Premium.ErroresAlta.ErrorFecha;
+            }
+            else if (!Premium.ValidoTurno(tur))
+            {
+                resultado = Premium.ErroresAlta.ErrorTurno;
+            }
+            else if (!Premium.ValidoVacio(des) || !Premium.ValidoVacio(cli))
+            {
+                resultado = Premium.ErroresAlta.ErrorVacio;
+            }
+            else if (!Premium.ControlAsistentes(cAsis))
+            {
+                resultado = Premium.ErroresAlta.ErrorAsistentes;
+            }
+            else if (BuscarFechaEvento(fec) != null)
+            {
+                resultado = Premium.ErroresAlta.FechaRepetida;
+            }
+            else if (!Contrato.ValidoCantPersonasServicio(personasServicio) || personasServicio > cAsis)
+            {
+                resultado = Premium.ErroresAlta.ServicioPersonas;
+            }
+            else if (s == null)
+            {
+                resultado = Premium.ErroresAlta.ServicioVacio;
+            }
+            else if (BuscarUsuario(emailUsuario) == null || BuscarUsuario(emailUsuario).Rol != 1)
+            {
+                resultado = Comun.ErroresAlta.ErrorUsuario;
+            }
+            else
+            {
+                Contrato con = new Contrato(s, personasServicio);
+                Premium p = new Premium(fec, tur, des, cli, cAsis, con);
+                eventos.Add(p);
+                Usuario u = BuscarUsuario(emailUsuario);
+                Organizador o = u as Organizador;
+                o.AgregarEvento(p);
+            }
+            return resultado;
+        }
+        #endregion
+
+        #region Agregaciones
+        public Contrato.ErroresAlta AgregarServicioEvento(Evento e, Servicio s, int cantPersonas)
+        {
+            Contrato.ErroresAlta resultado = Contrato.ErroresAlta.Ok;
+            if(!Contrato.ValidoCantPersonasServicio(cantPersonas))
+            {
+                resultado = Contrato.ErroresAlta.ErrorPersonas;
+            }
+            else if(!Contrato.ValidoServicioVacio(s))
+            {
+                resultado = Contrato.ErroresAlta.ErrorServicio;
+            }
+            else if(e.BuscarServicioEvento(s.Nombre))
+            {
+                resultado = Contrato.ErroresAlta.ErrorServicioExiste;
+            }
+            else if (e.CantAsistentes < cantPersonas)
+            {
+                resultado = Contrato.ErroresAlta.ErrorPersonas;
+            }
+            else if (e == null)
+            {
+                resultado = Contrato.ErroresAlta.ErrorEvento;
+            } else
+            {
+                Contrato con = new Contrato(s, cantPersonas);
+                e.Contratos.Add(con);
             }
             return resultado;
         }
