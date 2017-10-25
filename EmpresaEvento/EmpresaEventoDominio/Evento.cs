@@ -156,6 +156,7 @@ namespace EmpresaEventoDominio
         }
         #endregion
 
+        #region Métodos
         public bool BuscarServicioEvento(string nombre)
         {
             bool existe = false;
@@ -200,5 +201,6 @@ namespace EmpresaEventoDominio
             }
             return resultado;
         }
+        #endregion
     }
 }

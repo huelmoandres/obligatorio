@@ -139,10 +139,12 @@ namespace EmpresaEventoDominio
         }
         #endregion
 
+        #region Métodos
         public override string ToString()
         {
             return "Email: " + this.Email +
                 "\nContraseña: " + this.Pass;
         }
+        #endregion
     }
 }

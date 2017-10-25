@@ -51,11 +51,6 @@ namespace EmpresaEventoDominio
         }
         #endregion
 
-        public double SubTotal()
-        {
-            return precioPersonaEstablecido * cantPersonas;
-        }
-
         #region Validaciones
         public static bool ValidoCantPersonasServicio(int p)
         {
@@ -74,6 +69,13 @@ namespace EmpresaEventoDominio
             ErrorServicio,
             ErrorServicioExiste,
             ErrorEvento
+        }
+        #endregion
+
+        #region Métodos
+        public double SubTotal()
+        {
+            return precioPersonaEstablecido * cantPersonas;
         }
         #endregion
     }

@@ -64,11 +64,13 @@ namespace EmpresaEventoDominio
         }
         #endregion
 
+        #region Métodos
         public override string ToString()
         {
             return "Nombre: " + this.Nombre +
                 "\nDescripción: " + this.Descripcion +
                 "\nPrecio por persona: $" + this.PrecioPersona + "\n";
         }
+        #endregion
     }
 }

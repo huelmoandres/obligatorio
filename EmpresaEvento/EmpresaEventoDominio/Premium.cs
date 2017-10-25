@@ -32,17 +32,6 @@ namespace EmpresaEventoDominio
         }
         #endregion
 
-        public override double CalcularTotal()
-        {
-            double resultado = 0;
-            foreach (Contrato c in Contratos)
-            {
-                resultado += c.SubTotal();
-            }
-            resultado += aumento;
-            return resultado;
-        }
-
         #region Validaciones
         public static bool ControlAsistentes(int asistentes)
         {
@@ -55,9 +44,21 @@ namespace EmpresaEventoDominio
         }
         #endregion
 
+        #region Métodos
+        public override double CalcularTotal()
+        {
+            double resultado = 0;
+            foreach (Contrato c in Contratos)
+            {
+                resultado += c.SubTotal();
+            }
+            resultado += Premium.Aumento;
+            return resultado;
+        }
         public override string ToString()
         {
-            return base.ToString();
+            return base.ToString() + "\nCosto total del evento: $" + CalcularTotal();
         }
+        #endregion
     }
 }

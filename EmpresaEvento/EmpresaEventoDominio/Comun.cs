@@ -68,14 +68,15 @@ namespace EmpresaEventoDominio
         }
         #endregion
 
+        #region Métodos
         public override double CalcularTotal()
         {
             double resultado = 0;
-            foreach(Contrato c in Contratos)
+            foreach (Contrato c in Contratos)
             {
                 resultado += c.SubTotal();
             }
-            resultado += limpieza;
+            resultado += Comun.Limpieza;
             return resultado;
         }
 
@@ -84,5 +85,6 @@ namespace EmpresaEventoDominio
             return base.ToString() + "\nDuración: " + duracion + " hs" +
                                      "\nCosto total del evento: $" + CalcularTotal();
         }
+        #endregion
     }
 }

@@ -59,13 +59,13 @@ namespace EmpresaEventoDominio
         #endregion
 
         #region Buscadores
-        public Usuario BuscarUsuario(string mailUsuario)
+        public Usuario BuscarUsuario(string emailUsuario)
         {
             Usuario usu = null;
             int i = 0;
             while (i < usuarios.Count && usu == null)
             {
-                if (usuarios[i].Email == mailUsuario) usu = usuarios[i];
+                if (usuarios[i].Email == emailUsuario) usu = usuarios[i];
                 i++;
             }
             return usu;

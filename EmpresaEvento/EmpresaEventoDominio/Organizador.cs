@@ -13,7 +13,7 @@ namespace EmpresaEventoDominio
         private string telefono;
         private string direccion;
         private DateTime fecha;
-        private List<Evento> eventos = new List<Evento>();
+        private List<Evento> eventos;
         #endregion
 
         #region Propiedades
@@ -77,9 +77,11 @@ namespace EmpresaEventoDominio
             this.Direccion = direccion;
             this.Telefono = telefono;
             this.fecha = DateTime.Today;
+            eventos = new List<Evento>();
         }
         #endregion
 
+        #region Métodos
         public void AgregarEvento(Evento e)
         {
             eventos.Add(e);
@@ -102,5 +104,6 @@ namespace EmpresaEventoDominio
                 "\nTeléfono: " + this.Telefono +
                 "\nDirección: " + this.Direccion;
         }
+        #endregion
     }
 }
