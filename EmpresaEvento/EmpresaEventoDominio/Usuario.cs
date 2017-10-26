@@ -64,6 +64,7 @@ namespace EmpresaEventoDominio
         #endregion
 
         #region Validaciones
+
         public static bool ValidoPass(string pass)
         {
             bool resultado = false;
@@ -73,7 +74,7 @@ namespace EmpresaEventoDominio
             int contador = 0;
             while (i < pass.Length && (!mayu || !puntuacion || contador < 8))
             {
-                if(pass[i] == '!' || pass[i] == '.' || pass[i] == ',' || pass[i] == '¡' || pass[i] == ';')
+                if (pass[i] == '!' || pass[i] == '.' || pass[i] == ',' || pass[i] == '¡' || pass[i] == ';')
                 {
                     puntuacion = true;
                 }
@@ -84,11 +85,9 @@ namespace EmpresaEventoDominio
                 contador++;
                 i++;
             }
-            if(contador >= 8 && mayu && puntuacion) resultado = true;
+            if (contador >= 8 && mayu && puntuacion) resultado = true;
             return resultado;
         }
-
-
 
         public static bool ValidoEmail(string email)
         {
@@ -99,35 +98,35 @@ namespace EmpresaEventoDominio
             int contPunto = 0;
             if (email.Length >= 5)
             {
-                if (email[0] != '@' && email[0].ToString() != "") 
+                if (email[0] != '@' && email[0].ToString() != "")
                 {
                     int i = 1;
-                    while(i < email.Length && email[i].ToString() != "" && !arroba)
+                    while (i < email.Length && email[i].ToString() != "" && !arroba)
                     {
-                        if(email[i] == '@')
+                        if (email[i] == '@')
                         {
                             arroba = true;
                             contArroba++;
                         }
                         i++;
                     }
-                    if(arroba)
+                    if (arroba)
                     {
                         int j = i;
                         while (j < email.Length && email[j].ToString() != "" && !punto)
                         {
-                            if(email[j] == '@')
+                            if (email[j] == '@')
                             {
                                 contArroba++;
                             }
-                            if(email[j] == '.')
+                            if (email[j] == '.')
                             {
                                 punto = true;
                                 contPunto++;
                             }
                             j++;
                         }
-                        if(punto)
+                        if (punto)
                         {
                             int m = j;
                             while (m < email.Length && email[m].ToString() != "")
