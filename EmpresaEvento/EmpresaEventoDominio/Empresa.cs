@@ -109,6 +109,7 @@ namespace EmpresaEventoDominio
         #endregion
 
         #region Altas
+
         public Usuario.ErroresAlta AltaAdministrador(string email, string pass) // Le da de alta a un administrador y sino te devuelve el error correspondiente
         {
             Usuario.ErroresAlta resultado = Usuario.ErroresAlta.Ok;
