@@ -157,7 +157,7 @@ namespace EmpresaEventoDominio
         #endregion
 
         #region Métodos
-        public bool BuscarServicioEvento(string nombre)
+        public bool BuscarServicioEvento(string nombre) // Busco si un servicio ya existe en un evento creado 
         {
             bool existe = false;
             int i = 0;

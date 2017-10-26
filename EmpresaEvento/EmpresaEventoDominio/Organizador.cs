@@ -82,10 +82,6 @@ namespace EmpresaEventoDominio
         #endregion
 
         #region Métodos
-        public void AgregarEvento(Evento e)
-        {
-            eventos.Add(e);
-        }
 
         public double CostoTotalEventos()
         {

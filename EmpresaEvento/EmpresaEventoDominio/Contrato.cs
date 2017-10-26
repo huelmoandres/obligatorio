@@ -11,7 +11,7 @@ namespace EmpresaEventoDominio
         #region Atributos
         private Servicio servicio;
         private int cantPersonas;
-        private double precioPersonaEstablecido;
+        private double precioPersonaEstablecido; // Se congela el precio por persona establecido en ese momento
         #endregion
 
         #region Propiedades
@@ -73,7 +73,7 @@ namespace EmpresaEventoDominio
         #endregion
 
         #region Métodos
-        public double SubTotal()
+        public double SubTotal() // Se calcula el costo total del servicio para las personas contratadas
         {
             return precioPersonaEstablecido * cantPersonas;
         }

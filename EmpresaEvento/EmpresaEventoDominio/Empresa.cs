@@ -59,7 +59,7 @@ namespace EmpresaEventoDominio
         #endregion
 
         #region Buscadores
-        public Usuario BuscarUsuario(string emailUsuario)
+        public Usuario BuscarUsuario(string emailUsuario) //Busca un usuario por su mail y devuelve el usuario entero
         {
             Usuario usu = null;
             int i = 0;
@@ -71,7 +71,7 @@ namespace EmpresaEventoDominio
             return usu;
         }
 
-        public Evento BuscarFechaEvento(DateTime fecha)
+        public Evento BuscarFechaEvento(DateTime fecha) // Busca eventos por fecha
         {
             Evento eve = null;
             int i = 0;
@@ -83,7 +83,7 @@ namespace EmpresaEventoDominio
             return eve;
         }
 
-        public Evento BuscarEvento(int id)
+        public Evento BuscarEvento(int id) // Busca eventos por id
         {
             Evento eve = null;
             int i = 0;
@@ -95,7 +95,7 @@ namespace EmpresaEventoDominio
             return eve;
         }
 
-        public Servicio BuscarServicio(string nom)
+        public Servicio BuscarServicio(string nom) // Busca el servicio por nombre
         {
             Servicio s = null;
             int i = 0;
@@ -109,7 +109,7 @@ namespace EmpresaEventoDominio
         #endregion
 
         #region Altas
-        public Usuario.ErroresAlta AltaAdministrador(string email, string pass)
+        public Usuario.ErroresAlta AltaAdministrador(string email, string pass) // Le da de alta a un administrador y sino te devuelve el error correspondiente
         {
             Usuario.ErroresAlta resultado = Usuario.ErroresAlta.Ok;
             if(!Usuario.ValidoEmail(email))
@@ -132,7 +132,7 @@ namespace EmpresaEventoDominio
             return resultado;
         }
 
-        public Organizador.ErroresAlta AltaOrganizador(string email, string pass, string nombre, string tel, string dir)
+        public Organizador.ErroresAlta AltaOrganizador(string email, string pass, string nombre, string tel, string dir) // Le da de alta a un organizador y sino te devuelve el error correspondiente
         {
             Organizador.ErroresAlta resultado = Usuario.ErroresAlta.Ok;
             if (!Organizador.ValidoEmail(email))
@@ -168,7 +168,7 @@ namespace EmpresaEventoDominio
             return resultado;
         }
 
-        public Comun.ErroresAlta AltaComun(DateTime fec, byte tur, string des, string cli, int cAsis, double dur, Servicio s, int personasServicio, string emailUsuario)
+        public Comun.ErroresAlta AltaComun(DateTime fec, byte tur, string des, string cli, int cAsis, double dur, Servicio s, int personasServicio, string emailUsuario) // Le da de alta a un evento común
         {
             Comun.ErroresAlta resultado = Comun.ErroresAlta.Ok;
             if (!Comun.ValidoFecha(fec))
@@ -209,17 +209,17 @@ namespace EmpresaEventoDominio
             }
             else
             {
-                Contrato con = new Contrato(s, personasServicio);
-                Comun c = new Comun(fec, tur, des, cli, cAsis, con, dur);
-                eventos.Add(c);
+                Contrato con = new Contrato(s, personasServicio); // Se crea el contrato
+                Comun c = new Comun(fec, tur, des, cli, cAsis, con, dur); // Se agrega a un evento comun
+                eventos.Add(c); // Se agrega a la lista de los eventos
                 Usuario u = BuscarUsuario(emailUsuario);
                 Organizador o = u as Organizador;
-                o.AgregarEvento(c);
+                o.Eventos.Add(c); // Se agrega a la lista del organizador simultaneamente
             }
             return resultado;
         }
 
-        public Premium.ErroresAlta AltaPremium(DateTime fec, byte tur, string des, string cli, int cAsis, Servicio s, int personasServicio, string emailUsuario)
+        public Premium.ErroresAlta AltaPremium(DateTime fec, byte tur, string des, string cli, int cAsis, Servicio s, int personasServicio, string emailUsuario) // Se le da de alta a un evento premium
         {
             Premium.ErroresAlta resultado = Premium.ErroresAlta.Ok;
             if (!Premium.ValidoFecha(fec))
@@ -256,19 +256,19 @@ namespace EmpresaEventoDominio
             }
             else
             {
-                Contrato con = new Contrato(s, personasServicio);
+                Contrato con = new Contrato(s, personasServicio); // Mismo funcionamiento que con el evento común 
                 Premium p = new Premium(fec, tur, des, cli, cAsis, con);
                 eventos.Add(p);
                 Usuario u = BuscarUsuario(emailUsuario);
                 Organizador o = u as Organizador;
-                o.AgregarEvento(p);
+                o.Eventos.Add(p);
             }
             return resultado;
         }
         #endregion
 
         #region Agregaciones
-        public Contrato.ErroresAlta AgregarServicioEvento(Evento e, Servicio s, int cantPersonas)
+        public Contrato.ErroresAlta AgregarServicioEvento(Evento e, Servicio s, int cantPersonas) // Se agrega un servicio a un evento ya creado
         {
             Contrato.ErroresAlta resultado = Contrato.ErroresAlta.Ok;
             if(!Contrato.ValidoCantPersonasServicio(cantPersonas))

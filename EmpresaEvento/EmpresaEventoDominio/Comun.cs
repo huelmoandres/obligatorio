@@ -69,7 +69,7 @@ namespace EmpresaEventoDominio
         #endregion
 
         #region Métodos
-        public override double CalcularTotal()
+        public override double CalcularTotal() // Se calcula el total del evento común sumándole la limpieza y el precio por persona del servicio contratado
         {
             double resultado = 0;
             foreach (Contrato c in Contratos)

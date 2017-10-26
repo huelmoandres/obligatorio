@@ -94,14 +94,15 @@ namespace EmpresaEventoDominio
             bool resultado = false;
             bool arroba = false;
             bool punto = false;
+            bool existe = false;
             int contArroba = 0;
             int contPunto = 0;
-            if (email.Length >= 5)
+            if (email.Length >= 5) // Me aseguro que haya por lo menos 5 caracteres para poder tener una letra, un arroba, un punto y una letra depués del arroba y punto
             {
-                if (email[0] != '@' && email[0].ToString() != "")
+                if (email[0] != '@' && email[0] != ' ') // Verifico que mi primer caracter no sea arroba ni vacío
                 {
                     int i = 1;
-                    while (i < email.Length && email[i].ToString() != "" && !arroba)
+                    while (i < email.Length && email[i] != ' ' && !arroba) // Luego busco el arroba
                     {
                         if (email[i] == '@')
                         {
@@ -110,41 +111,49 @@ namespace EmpresaEventoDominio
                         }
                         i++;
                     }
-                    if (arroba)
+                    if (arroba) // Si lo encuentro
                     {
-                        int j = i;
-                        while (j < email.Length && email[j].ToString() != "" && !punto)
+                        int j = i; // Empiezo a buscar el punto a partir de la posición inmediatamente después que encontré el arroba
+                        if (j < email.Length && email[j] != '.') // corroboro que exista algo después del arroba y no sea igual a punto 
                         {
-                            if (email[j] == '@')
-                            {
-                                contArroba++;
-                            }
-                            if (email[j] == '.')
-                            {
-                                punto = true;
-                                contPunto++;
-                            }
                             j++;
-                        }
-                        if (punto)
-                        {
-                            int m = j;
-                            while (m < email.Length && email[m].ToString() != "")
+                            while (j < email.Length && email[j] != ' ' && !punto)
                             {
-                                if (email[m] == '@')
+                                if (email[j] == '@')
                                 {
                                     contArroba++;
                                 }
-                                if (email[m] == '.')
+                                if (email[j] == '.')
                                 {
+                                    punto = true;
                                     contPunto++;
                                 }
-                                m++;
+                                j++;
+                            }
+                        }
+                        if (punto) // Si encuentro el punto
+                        {
+                            int m = j; // Empiezo a buscar que no haya más puntos ni arrobas.
+                            if (m < email.Length) // Busco que haya algo después del punto
+                            {
+                                while (m < email.Length && email[m] != ' ')
+                                {
+                                    if (email[m] == '@')
+                                    {
+                                        contArroba++;
+                                    }
+                                    if (email[m] == '.')
+                                    {
+                                        contPunto++;
+                                    }
+                                    m++;
+                                }
+                                existe = true;
                             }
                         }
                     }
-                    if (contArroba == 1 && contPunto == 1) resultado = true;
                 }
+                if (contArroba == 1 && contPunto == 1 && existe) resultado = true;
             }
             return resultado;
         }

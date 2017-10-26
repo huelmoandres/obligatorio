@@ -45,7 +45,7 @@ namespace EmpresaEventoDominio
         #endregion
 
         #region Métodos
-        public override double CalcularTotal()
+        public override double CalcularTotal() // Se calcula el total incluyendo precio de aumento y precio total por servicios brindados
         {
             double resultado = 0;
             foreach (Contrato c in Contratos)
