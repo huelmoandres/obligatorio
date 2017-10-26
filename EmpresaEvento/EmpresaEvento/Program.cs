@@ -324,7 +324,7 @@ namespace EmpresaEvento
             }
             Console.WriteLine("-----------------------------------------");
             Console.Write("Ingrese un nombre: ");
-            nombre = Console.ReadLine().Trim();
+            nombre = Console.ReadLine();
             while (!Usuario.ValidoNombre(nombre))
             {
                 Console.Write("Nombre inválido. Ingrese uno nuevamente: ");

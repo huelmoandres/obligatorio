@@ -99,12 +99,34 @@ namespace EmpresaEventoDominio
         public static bool ValidoNombre(string nombre)
         {
             bool resultado = false;
-            string formato = "^[a-zA-Z ]*$";
+            nombre = nombre.Trim();
+            if (nombre.Length >= 3)
+            {
+                int i = 0;
+                bool noLetra = false;
+                while (i < nombre.Length && !noLetra)
+                {
+                    if(!nombre[i].Equals(' '))
+                    {
+                        if(!char.IsLetter(nombre[i]))
+                        {
+                            noLetra = true;
+                        }
+                    }
+                    i++;
+                }
+                if (!noLetra) resultado = true;
+            }
+            return resultado;
+
+            /*
+            bool resultado = false;
+            string formato = "^[a-zA-Z]*$";
             if(nombre.Length >= 3 && Regex.IsMatch(nombre, formato))
             {
                 resultado = true;
             }
-            return resultado;
+            */
         }
 
         public static bool ValidoTel(string tel)
